@@ -12,6 +12,10 @@
 		38094B9C2AD025960050F18D /* MainTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38094B9B2AD025960050F18D /* MainTabBarViewController.swift */; };
 		38094BA12AD025970050F18D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 38094BA02AD025970050F18D /* Assets.xcassets */; };
 		38094BA42AD025970050F18D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 38094BA22AD025970050F18D /* LaunchScreen.storyboard */; };
+		38094BAE2AD029F20050F18D /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38094BAD2AD029F20050F18D /* HomeViewController.swift */; };
+		38094BB02AD02A210050F18D /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38094BAF2AD02A210050F18D /* SearchViewController.swift */; };
+		38094BB32AD02A650050F18D /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38094BB22AD02A650050F18D /* NotificationsViewController.swift */; };
+		38094BB52AD02A900050F18D /* DirectMessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38094BB42AD02A900050F18D /* DirectMessagesViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +26,10 @@
 		38094BA02AD025970050F18D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		38094BA32AD025970050F18D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		38094BA52AD025970050F18D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		38094BAD2AD029F20050F18D /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		38094BAF2AD02A210050F18D /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		38094BB22AD02A650050F18D /* NotificationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
+		38094BB42AD02A900050F18D /* DirectMessagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectMessagesViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,7 +65,6 @@
 				38094BAB2AD028530050F18D /* Controllers */,
 				38094B972AD025960050F18D /* AppDelegate.swift */,
 				38094B992AD025960050F18D /* SceneDelegate.swift */,
-				38094B9B2AD025960050F18D /* MainTabBarViewController.swift */,
 				38094BA02AD025970050F18D /* Assets.xcassets */,
 				38094BA22AD025970050F18D /* LaunchScreen.storyboard */,
 				38094BA52AD025970050F18D /* Info.plist */,
@@ -68,8 +75,21 @@
 		38094BAB2AD028530050F18D /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				38094BAC2AD029470050F18D /* Core */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		38094BAC2AD029470050F18D /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				38094B9B2AD025960050F18D /* MainTabBarViewController.swift */,
+				38094BAD2AD029F20050F18D /* HomeViewController.swift */,
+				38094BAF2AD02A210050F18D /* SearchViewController.swift */,
+				38094BB22AD02A650050F18D /* NotificationsViewController.swift */,
+				38094BB42AD02A900050F18D /* DirectMessagesViewController.swift */,
+			);
+			path = Core;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -142,9 +162,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				38094BB02AD02A210050F18D /* SearchViewController.swift in Sources */,
 				38094B9C2AD025960050F18D /* MainTabBarViewController.swift in Sources */,
 				38094B982AD025960050F18D /* AppDelegate.swift in Sources */,
+				38094BB32AD02A650050F18D /* NotificationsViewController.swift in Sources */,
 				38094B9A2AD025960050F18D /* SceneDelegate.swift in Sources */,
+				38094BAE2AD029F20050F18D /* HomeViewController.swift in Sources */,
+				38094BB52AD02A900050F18D /* DirectMessagesViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
