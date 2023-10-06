@@ -1,5 +1,5 @@
 //
-//  MainTabBarController.swift
+//  MainTabBarViewController.swift
 //  TwitterClone
 //
 //  Created by Саша Восколович on 06.10.2023.
@@ -7,11 +7,11 @@
 
 import UIKit
 
-class MainTabBarController: UITabBarController {
+class MainTabBarViewController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        view.backgroundColor = .red
     }
 
 
