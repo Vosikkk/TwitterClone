@@ -11,6 +11,25 @@ class ProfileTableViewHeader: UIView {
 
     
     private var profileAvatar = ProfileCustomUIView()
+    private let followingTextLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Following"
+        label.textColor = .secondaryLabel
+        label.font = .systemFont(ofSize: 14, weight: .regular)
+        return label
+    }()
+    
+    private let followingCountLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = .systemFont(ofSize: 14, weight: .bold)
+        label.text = "215"
+        label.textColor = .label
+        return label
+        
+    }()
+    
     
     private let joinedDateLabel: UILabel = {
         let label = UILabel()
@@ -80,6 +99,7 @@ class ProfileTableViewHeader: UIView {
         addSubview(userBioLabel)
         addSubview(joinDateImageView)
         addSubview(joinedDateLabel)
+        addSubview(followingCountLabel)
         configureConstraints()
     }
     
@@ -95,7 +115,7 @@ class ProfileTableViewHeader: UIView {
                                          y: (bounds.height - profileHeaderImageView.bounds.height) / 1.8,
                                          width: Constants.avatarWidth,
                                          height: Constants.avatarHeight)
-        }
+    }
     
     
     private func configureConstraints() {
@@ -126,6 +146,13 @@ class ProfileTableViewHeader: UIView {
             joinedDateLabel.leadingAnchor.constraint(equalTo: joinDateImageView.trailingAnchor, constant: 4),
             joinedDateLabel.bottomAnchor.constraint(equalTo: joinDateImageView.bottomAnchor)
         ]
+//        let followingCountLabelConstraints = [
+//            
+//        
+//        
+//        
+//        ]
+        
         NSLayoutConstraint.activate(joinedDateLabelConstraints)
         NSLayoutConstraint.activate(joinDateImageViewConstraints)
         NSLayoutConstraint.activate(profileHeaderImageViewConstraints)
