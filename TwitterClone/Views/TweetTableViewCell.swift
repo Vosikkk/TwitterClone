@@ -25,18 +25,20 @@ class TweetTableViewCell: UITableViewCell {
     
     weak var delegate: TweetTableViewCellDelegate?
     
+    private var profileAvatar = ProfileCustomUIView()
     
-    private let avatarImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .scaleAspectFill
-        imageView.layer.cornerRadius = 25
-        imageView.layer.masksToBounds = true
-        imageView.clipsToBounds = true
-        imageView.image = UIImage(systemName: "person.fill")
-        imageView.backgroundColor = .white
-        return imageView
-    }()
+    
+//    private let avatarImageView: UIImageView = {
+//        let imageView = UIImageView()
+//        imageView.translatesAutoresizingMaskIntoConstraints = false
+//        imageView.contentMode = .scaleAspectFill
+//        imageView.layer.cornerRadius = 25
+//        imageView.layer.masksToBounds = true
+//        imageView.clipsToBounds = true
+//        imageView.image = UIImage(systemName: "person.fill")
+//        imageView.backgroundColor = .white
+//        return imageView
+//    }()
     
     private let displayNameLabel: UILabel = {
         let label = UILabel()
@@ -99,7 +101,7 @@ class TweetTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        contentView.addSubview(avatarImageView)
+       // contentView.addSubview(avatarImageView)
         contentView.addSubview(displayNameLabel)
         contentView.addSubview(userNameLabel)
         contentView.addSubview(tweetTextContentLabel)
@@ -107,9 +109,20 @@ class TweetTableViewCell: UITableViewCell {
         contentView.addSubview(replyButton)
         contentView.addSubview(likeButton)
         contentView.addSubview(shareButton)
+        contentView.addSubview(profileAvatar)
         configureConstraints()
         configureButtons()
     }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+       
+        profileAvatar.frame = CGRect(x: Constants.avatarX,
+                                     y: Constants.avatarY,
+                                     width: Constants.avatarWidth,
+                                     height: Constants.avatarHeight)
+    }
+    
     
     @objc private func didTapReply() {
         delegate?.tweetTableViewCellDidTapReply()
@@ -137,15 +150,15 @@ class TweetTableViewCell: UITableViewCell {
     
     
     private func configureConstraints() {
-        let avatarImageViewConstraints = [
-            avatarImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            avatarImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 14),
-            avatarImageView.heightAnchor.constraint(equalToConstant: 50),
-            avatarImageView.widthAnchor.constraint(equalToConstant: 50)
-        ]
+//        let avatarImageViewConstraints = [
+//            avatarImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+//            avatarImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 14),
+//            avatarImageView.heightAnchor.constraint(equalToConstant: 50),
+//            avatarImageView.widthAnchor.constraint(equalToConstant: 50)
+//        ]
         
         let displayNameLabelConstraints = [
-            displayNameLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 20),
+            displayNameLabel.leadingAnchor.constraint(equalTo: profileAvatar.trailingAnchor, constant: 20),
             displayNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
         ]
         
@@ -184,12 +197,19 @@ class TweetTableViewCell: UITableViewCell {
         ]
         
         NSLayoutConstraint.activate(displayNameLabelConstraints)
-        NSLayoutConstraint.activate(avatarImageViewConstraints)
+       // NSLayoutConstraint.activate(avatarImageViewConstraints)
         NSLayoutConstraint.activate(userNameLabelConsytraints)
         NSLayoutConstraint.activate(tweetTextContentLabelConstraints)
         NSLayoutConstraint.activate(shareButtonConstraints)
         NSLayoutConstraint.activate(likeButtonConstraints)
         NSLayoutConstraint.activate(retweetButtonConstraints)
         NSLayoutConstraint.activate(replyButtonConstraints)
+    }
+    
+    private struct Constants {
+        static let avatarWidth: CGFloat = 60
+        static let avatarHeight: CGFloat = 60
+        static let avatarX: CGFloat = 0
+        static let avatarY: CGFloat = 22
     }
 }

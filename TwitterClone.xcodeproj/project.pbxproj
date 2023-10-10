@@ -18,6 +18,8 @@
 		38094BB52AD02A900050F18D /* DirectMessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38094BB42AD02A900050F18D /* DirectMessagesViewController.swift */; };
 		38094BB82AD0345B0050F18D /* TweetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38094BB72AD0345B0050F18D /* TweetTableViewCell.swift */; };
 		38B204872AD589EC00C902BE /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B204862AD589EC00C902BE /* ProfileViewController.swift */; };
+		38B204892AD5965B00C902BE /* ProfileTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B204882AD5965B00C902BE /* ProfileTableViewHeader.swift */; };
+		38F7EFB72AD5DB2000B0FB73 /* ProfileCustomUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F7EFB62AD5DB2000B0FB73 /* ProfileCustomUIView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +36,8 @@
 		38094BB42AD02A900050F18D /* DirectMessagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectMessagesViewController.swift; sourceTree = "<group>"; };
 		38094BB72AD0345B0050F18D /* TweetTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetTableViewCell.swift; sourceTree = "<group>"; };
 		38B204862AD589EC00C902BE /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		38B204882AD5965B00C902BE /* ProfileTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewHeader.swift; sourceTree = "<group>"; };
+		38F7EFB62AD5DB2000B0FB73 /* ProfileCustomUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCustomUIView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +106,8 @@
 			isa = PBXGroup;
 			children = (
 				38094BB72AD0345B0050F18D /* TweetTableViewCell.swift */,
+				38B204882AD5965B00C902BE /* ProfileTableViewHeader.swift */,
+				38F7EFB62AD5DB2000B0FB73 /* ProfileCustomUIView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -192,6 +198,8 @@
 				38094BAE2AD029F20050F18D /* HomeViewController.swift in Sources */,
 				38B204872AD589EC00C902BE /* ProfileViewController.swift in Sources */,
 				38094BB52AD02A900050F18D /* DirectMessagesViewController.swift in Sources */,
+				38B204892AD5965B00C902BE /* ProfileTableViewHeader.swift in Sources */,
+				38F7EFB72AD5DB2000B0FB73 /* ProfileCustomUIView.swift in Sources */,
 				38094BB82AD0345B0050F18D /* TweetTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
