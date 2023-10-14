@@ -9,15 +9,64 @@ import UIKit
 
 class ProfileTableViewHeader: UIView {
     
-    private var tabs: [UIButton] = ["Posts", "Replies", "HighLights", "Media", "Likes"]
-        .map { buttonTitle in
-            let button = UIButton(type: .system)
-            button.setTitle(buttonTitle, for: .normal)
-            button.titleLabel?.font = .systemFont(ofSize: 16, weight: .bold)
-            button.tintColor = .label
-            button.translatesAutoresizingMaskIntoConstraints = false
-            return button
+    private enum SectionTabs: String {
+        case posts = "Posts"
+        case replies = "Replies"
+        case highlights = "HighLights"
+        case media = "Media"
+        case likes = "Likes"
+        
+        var index : Int {
+            switch self {
+            case .posts:
+                return 0
+            case .replies:
+                return 1
+            case .highlights:
+                return 2
+            case .media:
+                return 3
+            case .likes:
+                return 4
+            }
         }
+    }
+    
+    private var leadingAnchors: [NSLayoutConstraint] = []
+    private var trailingAnchors: [NSLayoutConstraint] = []
+    
+    
+    private let indicators: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = UIColor(red: 29/255, green: 161/255, blue: 242/255, alpha: 1)
+        return view
+    }()
+    
+    private var selectedTab: Int = 0 {
+        didSet {
+            for i in 0..<tabs.count {
+                UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut) { [weak self] in
+                    self?.sectionStack.arrangedSubviews[i].tintColor = i == self?.selectedTab ? .label : .secondaryLabel
+                    self?.leadingAnchors[i].isActive = i == self?.selectedTab ? true : false
+                    self?.trailingAnchors[i].isActive = i == self?.selectedTab ? true : false
+                    self?.layoutIfNeeded()
+                }
+            }
+        }
+    }
+    private let tabs: [UIButton] = {
+        let titles = ["Posts", "Replies", "HighLights", "Media", "Likes"]
+        var buttons: [UIButton] = []
+        for title in titles {
+            let button = UIButton(type: .system)
+            button.setTitle(title, for: .normal)
+            button.titleLabel?.font = .systemFont(ofSize: 16, weight: .bold)
+            button.translatesAutoresizingMaskIntoConstraints = false
+            buttons.append(button)
+        }
+        return buttons
+    }()
     
     private lazy var sectionStack: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: tabs)
@@ -140,7 +189,9 @@ class ProfileTableViewHeader: UIView {
         addSubview(followersCountLabel)
         addSubview(followersTextLabel)
         addSubview(sectionStack)
+        addSubview(indicators)
         configureConstraints()
+        configureStackButtons()
     }
     
     required init?(coder: NSCoder) {
@@ -151,12 +202,36 @@ class ProfileTableViewHeader: UIView {
             super.layoutSubviews()
     }
     
-    @objc private func didTapTab() {
-        
+    private func configureStackButtons() {
+        for (i, button) in tabs.enumerated() {
+            button.addTarget(self, action: #selector(didTapTab), for: .touchUpInside)
+            button.tintColor = i == selectedTab ? .label : .secondaryLabel
+        }
+    }
+    
+    @objc private func didTapTab(_ sender: UIButton) {
+        guard let label = sender.titleLabel?.text else { return }
+        switch label {
+        case ~SectionTabs.posts:
+            selectedTab = 0
+        case ~SectionTabs.replies:
+            selectedTab = 1
+        case ~SectionTabs.highlights:
+            selectedTab = 2
+        case ~SectionTabs.media:
+            selectedTab = 3
+        case ~SectionTabs.likes:
+            selectedTab = 4
+        default:
+            selectedTab = 0
+        }
     }
     
     
     private func configureConstraints() {
+        
+        fillLayoutForIndicators()
+        
         let profileHeaderImageViewConstraints = [
             profileHeaderImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
             profileHeaderImageView.topAnchor.constraint(equalTo: topAnchor),
@@ -211,7 +286,15 @@ class ProfileTableViewHeader: UIView {
             sectionStack.topAnchor.constraint(equalTo: followingCountLabel.bottomAnchor, constant: 13),
             sectionStack.heightAnchor.constraint(equalToConstant: 35)
         ]
+        
+        let indicatorsConstraints = [
+            leadingAnchors[0],
+            trailingAnchors[0],
+            indicators.topAnchor.constraint(equalTo: sectionStack.arrangedSubviews[0].bottomAnchor),
+            indicators.heightAnchor.constraint(equalToConstant: 4)
+        ]
 
+        NSLayoutConstraint.activate(indicatorsConstraints)
         NSLayoutConstraint.activate(joinedDateLabelConstraints)
         NSLayoutConstraint.activate(joinDateImageViewConstraints)
         NSLayoutConstraint.activate(profileHeaderImageViewConstraints)
@@ -223,6 +306,15 @@ class ProfileTableViewHeader: UIView {
         NSLayoutConstraint.activate(followersCountLabelConstraints)
         NSLayoutConstraint.activate(followersTextLabelConstraints)
         NSLayoutConstraint.activate(sectionStackConstraints)
+    }
+    
+    private func fillLayoutForIndicators() {
+        for i in 0..<tabs.count {
+            let leadingAnchor = indicators.leadingAnchor.constraint(equalTo: sectionStack.arrangedSubviews[i].leadingAnchor)
+            leadingAnchors.append(leadingAnchor)
+            let trailingAnchor = indicators.trailingAnchor.constraint(equalTo: sectionStack.arrangedSubviews[i].trailingAnchor)
+            trailingAnchors.append(trailingAnchor)
+        }
     }
 }
 
@@ -245,3 +337,8 @@ class ProfileTableViewHeader: UIView {
 //            profileAvatarImageView.heightAnchor.constraint(equalToConstant: 80)
 //        ]
 //        NSLayoutConstraint.activate(profileAvatarImageViewConstraints)
+extension RawRepresentable {
+    static prefix func ~(rhs: Self) -> Self.RawValue {
+        rhs.rawValue
+    }
+}
