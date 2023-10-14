@@ -8,9 +8,47 @@
 import UIKit
 
 class ProfileTableViewHeader: UIView {
-
     
-    private var profileAvatar = ProfileCustomUIView()
+    private var tabs: [UIButton] = ["Posts", "Replies", "HighLights", "Media", "Likes"]
+        .map { buttonTitle in
+            let button = UIButton(type: .system)
+            button.setTitle(buttonTitle, for: .normal)
+            button.titleLabel?.font = .systemFont(ofSize: 16, weight: .bold)
+            button.tintColor = .label
+            button.translatesAutoresizingMaskIntoConstraints = false
+            return button
+        }
+    
+    private lazy var sectionStack: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: tabs)
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.distribution = .equalSpacing
+        stackView.axis = .horizontal
+        stackView.alignment = .center
+        return stackView
+    }()
+    
+    private let followersTextLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Followers"
+        label.textColor = .secondaryLabel
+        label.font = .systemFont(ofSize: 14, weight: .regular)
+        return label
+    }()
+    
+    
+    
+    private let followersCountLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = .systemFont(ofSize: 14, weight: .bold)
+        label.text = "2M"
+        label.textColor = .label
+        return label
+    }()
+   
+    
     private let followingTextLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -91,19 +129,19 @@ class ProfileTableViewHeader: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        addSubview(profileAvatar)
         addSubview(profileHeaderImageView)
-        bringSubviewToFront(profileAvatar)
         addSubview(displayNameLabel)
         addSubview(userNameLabel)
         addSubview(userBioLabel)
         addSubview(joinDateImageView)
         addSubview(joinedDateLabel)
         addSubview(followingCountLabel)
+        addSubview(followingTextLabel)
+        addSubview(followersCountLabel)
+        addSubview(followersTextLabel)
+        addSubview(sectionStack)
         configureConstraints()
     }
-    
-    
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -111,10 +149,10 @@ class ProfileTableViewHeader: UIView {
     
     override func layoutSubviews() {
             super.layoutSubviews()
-            profileAvatar.frame = CGRect(x: Constants.avatarX,
-                                         y: (bounds.height - profileHeaderImageView.bounds.height) / 1.8,
-                                         width: Constants.avatarWidth,
-                                         height: Constants.avatarHeight)
+    }
+    
+    @objc private func didTapTab() {
+        
     }
     
     
@@ -126,8 +164,8 @@ class ProfileTableViewHeader: UIView {
             profileHeaderImageView.heightAnchor.constraint(equalToConstant: 150)
         ]
         let displayNameLabelConstraints = [
-            displayNameLabel.leadingAnchor.constraint(equalTo: profileAvatar.leadingAnchor, constant: 5),
-            displayNameLabel.topAnchor.constraint(equalTo: profileAvatar.bottomAnchor, constant: 15)
+            displayNameLabel.leadingAnchor.constraint(equalTo: profileHeaderImageView.leadingAnchor, constant: 10),
+            displayNameLabel.topAnchor.constraint(equalTo: profileHeaderImageView.bottomAnchor, constant: 60)
         ]
         let userNameLabelConstraints = [
             userNameLabel.leadingAnchor.constraint(equalTo: displayNameLabel.leadingAnchor),
@@ -136,35 +174,55 @@ class ProfileTableViewHeader: UIView {
         let userBioLabelConstraints = [
             userBioLabel.leadingAnchor.constraint(equalTo: displayNameLabel.leadingAnchor),
            // userBioLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5),
-            userBioLabel.topAnchor.constraint(equalTo: userNameLabel.bottomAnchor, constant: 5)
+            userBioLabel.topAnchor.constraint(equalTo: userNameLabel.bottomAnchor, constant: 20)
         ]
         let joinDateImageViewConstraints = [
             joinDateImageView.leadingAnchor.constraint(equalTo: displayNameLabel.leadingAnchor),
-            joinDateImageView.topAnchor.constraint(equalTo: userBioLabel.bottomAnchor, constant: 5)
+            joinDateImageView.topAnchor.constraint(equalTo: userBioLabel.bottomAnchor, constant: 10)
         ]
         let joinedDateLabelConstraints = [
-            joinedDateLabel.leadingAnchor.constraint(equalTo: joinDateImageView.trailingAnchor, constant: 4),
+            joinedDateLabel.leadingAnchor.constraint(equalTo: joinDateImageView.trailingAnchor, constant: 2),
             joinedDateLabel.bottomAnchor.constraint(equalTo: joinDateImageView.bottomAnchor)
         ]
-//        let followingCountLabelConstraints = [
-//            
-//        
-//        
-//        
-//        ]
         
+        let followingCountLabelConstraints = [
+            followingCountLabel.leadingAnchor.constraint(equalTo: displayNameLabel.leadingAnchor),
+            followingCountLabel.topAnchor.constraint(equalTo: joinedDateLabel.bottomAnchor, constant: 15)
+        ]
+                
+        let followingTextLabelConstraints = [
+            followingTextLabel.leadingAnchor.constraint(equalTo: followingCountLabel.trailingAnchor, constant: 6),
+            followingTextLabel.bottomAnchor.constraint(equalTo: followingCountLabel.bottomAnchor)
+        ]
+                
+        let followersCountLabelConstraints = [
+            followersCountLabel.leadingAnchor.constraint(equalTo: followingTextLabel.trailingAnchor, constant: 6),
+            followersCountLabel.bottomAnchor.constraint(equalTo: followingCountLabel.bottomAnchor)
+        ]
+                
+        let followersTextLabelConstraints = [
+            followersTextLabel.leadingAnchor.constraint(equalTo: followersCountLabel.trailingAnchor, constant: 6),
+            followersTextLabel.bottomAnchor.constraint(equalTo: followingCountLabel.bottomAnchor)
+        ]
+        
+        let sectionStackConstraints = [
+            sectionStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 17),
+            sectionStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -17),
+            sectionStack.topAnchor.constraint(equalTo: followingCountLabel.bottomAnchor, constant: 13),
+            sectionStack.heightAnchor.constraint(equalToConstant: 35)
+        ]
+
         NSLayoutConstraint.activate(joinedDateLabelConstraints)
         NSLayoutConstraint.activate(joinDateImageViewConstraints)
         NSLayoutConstraint.activate(profileHeaderImageViewConstraints)
         NSLayoutConstraint.activate(displayNameLabelConstraints)
         NSLayoutConstraint.activate(userNameLabelConstraints)
         NSLayoutConstraint.activate(userBioLabelConstraints)
-    }
-    
-    private struct Constants {
-        static let avatarWidth: CGFloat = 80
-        static let avatarHeight: CGFloat = 80
-        static let avatarX: CGFloat = 10
+        NSLayoutConstraint.activate(followingCountLabelConstraints)
+        NSLayoutConstraint.activate(followingTextLabelConstraints)
+        NSLayoutConstraint.activate(followersCountLabelConstraints)
+        NSLayoutConstraint.activate(followersTextLabelConstraints)
+        NSLayoutConstraint.activate(sectionStackConstraints)
     }
 }
 

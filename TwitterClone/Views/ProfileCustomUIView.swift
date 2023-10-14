@@ -9,10 +9,11 @@ import UIKit
 
 class ProfileCustomUIView: UIView {
 
-  
     private var color = UIColor.red
     private let borderWidth: CGFloat = 5.0
-      
+    private let borderColor =  UIColor.white
+     
+    
     override func draw(_ rect: CGRect) {
         drawCircle()
     }
@@ -28,7 +29,6 @@ class ProfileCustomUIView: UIView {
            contentMode = .redraw
            layer.borderColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0).cgColor
        }
-    
     
     private func drawCircle() {
         color.setFill()
