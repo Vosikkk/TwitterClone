@@ -17,7 +17,6 @@
 		38094BB32AD02A650050F18D /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38094BB22AD02A650050F18D /* NotificationsViewController.swift */; };
 		38094BB52AD02A900050F18D /* DirectMessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38094BB42AD02A900050F18D /* DirectMessagesViewController.swift */; };
 		38094BB82AD0345B0050F18D /* TweetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38094BB72AD0345B0050F18D /* TweetTableViewCell.swift */; };
-		3887CF0B2ADB46F20087BBE3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3887CF0A2ADB46F20087BBE3 /* GoogleService-Info.plist */; };
 		3887CF0E2ADB49320087BBE3 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 3887CF0D2ADB49320087BBE3 /* FirebaseAnalytics */; };
 		3887CF102ADB49320087BBE3 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = 3887CF0F2ADB49320087BBE3 /* FirebaseAnalyticsOnDeviceConversion */; };
 		3887CF122ADB49320087BBE3 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 3887CF112ADB49320087BBE3 /* FirebaseAnalyticsSwift */; };
@@ -64,7 +63,6 @@
 		38094BB22AD02A650050F18D /* NotificationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
 		38094BB42AD02A900050F18D /* DirectMessagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectMessagesViewController.swift; sourceTree = "<group>"; };
 		38094BB72AD0345B0050F18D /* TweetTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetTableViewCell.swift; sourceTree = "<group>"; };
-		3887CF0A2ADB46F20087BBE3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3887CF442ADB4AF60087BBE3 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		38B204862AD589EC00C902BE /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		38B204882AD5965B00C902BE /* ProfileTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewHeader.swift; sourceTree = "<group>"; };
@@ -135,7 +133,6 @@
 				38094BA02AD025970050F18D /* Assets.xcassets */,
 				38094BA22AD025970050F18D /* LaunchScreen.storyboard */,
 				38094BA52AD025970050F18D /* Info.plist */,
-				3887CF0A2ADB46F20087BBE3 /* GoogleService-Info.plist */,
 			);
 			path = TwitterClone;
 			sourceTree = "<group>";
@@ -280,7 +277,6 @@
 			files = (
 				38094BA42AD025970050F18D /* LaunchScreen.storyboard in Resources */,
 				38094BA12AD025970050F18D /* Assets.xcassets in Resources */,
-				3887CF0B2ADB46F20087BBE3 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

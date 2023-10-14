@@ -38,7 +38,11 @@ class HomeViewController: UIViewController {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = false
         if Auth.auth().currentUser == nil {
-            
+            let vc = UINavigationController(rootViewController: OnboardingViewController())
+            vc.modalPresentationStyle = .fullScreen
+            print("fskjfhkls")
+            present(vc, animated: false)
+            print("11")
         }
     }
     
