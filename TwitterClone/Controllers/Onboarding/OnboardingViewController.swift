@@ -10,6 +10,11 @@ import UIKit
 class OnboardingViewController: UIViewController {
 
     
+    private struct Constants {
+        static let colorButton = UIColor(red: 29/255, green: 161/255, blue: 242/255, alpha: 1)
+    }
+    
+    
     private let welcomeLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
@@ -47,9 +52,12 @@ class OnboardingViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Login", for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 14)
-        button.tintColor = UIColor(red: 29/255, green: 161/255, blue: 242/255, alpha: 1)
+        button.tintColor = Constants.colorButton
         return button
     }()
+    
+    
+  
     
     
     override func viewDidLoad() {
@@ -60,9 +68,18 @@ class OnboardingViewController: UIViewController {
         view.addSubview(createAccountButton)
         view.addSubview(promptLabel)
         view.addSubview(loginButton)
+       
+        
+        createAccountButton.addTarget(self, action: #selector(didTapCreateAccount), for: .touchUpInside)
+        
+        
         configureConstraints()
     }
     
+    @objc private func didTapCreateAccount() {
+        let vc = RegisterViewController()
+        navigationController?.pushViewController(vc, animated: true)
+    }
     
     private func configureConstraints() {
         let welcomeLabelConstraints = [
