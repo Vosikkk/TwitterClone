@@ -45,8 +45,10 @@
 		3887CF402ADB49320087BBE3 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 3887CF3F2ADB49320087BBE3 /* FirebaseStorage */; };
 		3887CF422ADB49320087BBE3 /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 3887CF412ADB49320087BBE3 /* FirebaseStorageCombine-Community */; };
 		3887CF452ADB4AF60087BBE3 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3887CF442ADB4AF60087BBE3 /* OnboardingViewController.swift */; };
+		389E49AD2ADB5DDE00B824C0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 389E49AC2ADB5DDE00B824C0 /* GoogleService-Info.plist */; };
 		38B204872AD589EC00C902BE /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B204862AD589EC00C902BE /* ProfileViewController.swift */; };
 		38B204892AD5965B00C902BE /* ProfileTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B204882AD5965B00C902BE /* ProfileTableViewHeader.swift */; };
+		38E6F6FF2ADD7099005DAE33 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E6F6FE2ADD7099005DAE33 /* RegisterViewController.swift */; };
 		38F7EFB72AD5DB2000B0FB73 /* ProfileCustomUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F7EFB62AD5DB2000B0FB73 /* ProfileCustomUIView.swift */; };
 /* End PBXBuildFile section */
 
@@ -64,8 +66,10 @@
 		38094BB42AD02A900050F18D /* DirectMessagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectMessagesViewController.swift; sourceTree = "<group>"; };
 		38094BB72AD0345B0050F18D /* TweetTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetTableViewCell.swift; sourceTree = "<group>"; };
 		3887CF442ADB4AF60087BBE3 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
+		389E49AC2ADB5DDE00B824C0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../Desktop/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		38B204862AD589EC00C902BE /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		38B204882AD5965B00C902BE /* ProfileTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewHeader.swift; sourceTree = "<group>"; };
+		38E6F6FE2ADD7099005DAE33 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		38F7EFB62AD5DB2000B0FB73 /* ProfileCustomUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCustomUIView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -133,6 +137,7 @@
 				38094BA02AD025970050F18D /* Assets.xcassets */,
 				38094BA22AD025970050F18D /* LaunchScreen.storyboard */,
 				38094BA52AD025970050F18D /* Info.plist */,
+				389E49AC2ADB5DDE00B824C0 /* GoogleService-Info.plist */,
 			);
 			path = TwitterClone;
 			sourceTree = "<group>";
@@ -173,6 +178,7 @@
 			isa = PBXGroup;
 			children = (
 				3887CF442ADB4AF60087BBE3 /* OnboardingViewController.swift */,
+				38E6F6FE2ADD7099005DAE33 /* RegisterViewController.swift */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
@@ -277,6 +283,7 @@
 			files = (
 				38094BA42AD025970050F18D /* LaunchScreen.storyboard in Resources */,
 				38094BA12AD025970050F18D /* Assets.xcassets in Resources */,
+				389E49AD2ADB5DDE00B824C0 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -297,6 +304,7 @@
 				3887CF452ADB4AF60087BBE3 /* OnboardingViewController.swift in Sources */,
 				38094BB52AD02A900050F18D /* DirectMessagesViewController.swift in Sources */,
 				38B204892AD5965B00C902BE /* ProfileTableViewHeader.swift in Sources */,
+				38E6F6FF2ADD7099005DAE33 /* RegisterViewController.swift in Sources */,
 				38F7EFB72AD5DB2000B0FB73 /* ProfileCustomUIView.swift in Sources */,
 				38094BB82AD0345B0050F18D /* TweetTableViewCell.swift in Sources */,
 			);
