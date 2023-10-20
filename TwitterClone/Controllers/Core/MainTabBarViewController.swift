@@ -13,7 +13,11 @@ class MainTabBarViewController: UITabBarController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         
-        let vc1 = UINavigationController(rootViewController: HomeViewController())
+        let userAuth: AuthManager = UserAuth()
+        let registerViewModel = RegisterViewModel(userAuth: userAuth)
+        
+        
+        let vc1 = UINavigationController(rootViewController: HomeViewController(registerViewModel: registerViewModel))
         let vc2 = UINavigationController(rootViewController: SearchViewController())
         let vc3 = UINavigationController(rootViewController: NotificationsViewController())
         let vc4 = UINavigationController(rootViewController: DirectMessagesViewController())
@@ -34,6 +38,8 @@ class MainTabBarViewController: UITabBarController {
         setViewControllers([vc1, vc2, vc3, vc4], animated: true)
     }
 
-
+    deinit {
+            print("MainTabBarViewController деініціалізований")
+        }
 }
 

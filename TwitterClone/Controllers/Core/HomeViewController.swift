@@ -17,6 +17,9 @@ class HomeViewController: UIViewController {
         return tableView
     }()
     
+    private let registerViewModel: RegisterViewModel
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,10 +27,19 @@ class HomeViewController: UIViewController {
         
         timelineTableView.delegate = self
         timelineTableView.dataSource = self
-        
         configureNavigatioBar()
       
     }
+    
+    init(registerViewModel: RegisterViewModel) {
+        self.registerViewModel = registerViewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -37,8 +49,9 @@ class HomeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = false
+       
         if Auth.auth().currentUser == nil {
-            let vc = UINavigationController(rootViewController: OnboardingViewController())
+            let vc = UINavigationController(rootViewController: OnboardingViewController(registerViewModel: registerViewModel))
             vc.modalPresentationStyle = .fullScreen
             print("fskjfhkls")
             present(vc, animated: false)

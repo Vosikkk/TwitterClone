@@ -31,7 +31,7 @@ class OnboardingViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Create account", for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 24, weight: .bold)
-        button.backgroundColor = UIColor(red: 29/255, green: 161/255, blue: 242/255, alpha: 1)
+        button.backgroundColor = Constants.colorButton
         button.layer.masksToBounds = true
         button.tintColor = .white
         button.layer.cornerRadius = 30
@@ -57,9 +57,6 @@ class OnboardingViewController: UIViewController {
     }()
     
     
-  
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
@@ -76,8 +73,22 @@ class OnboardingViewController: UIViewController {
         configureConstraints()
     }
     
+    private let registerViewModel: RegisterViewModel
+    
+    init(registerViewModel: RegisterViewModel) {
+        self.registerViewModel = registerViewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    
+    
+    
     @objc private func didTapCreateAccount() {
-        let vc = RegisterViewController()
+        let vc = RegisterViewController(registerViewModel: registerViewModel)
         navigationController?.pushViewController(vc, animated: true)
     }
     

@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import Combine
+
 
 class RegisterViewController: UIViewController {
 
@@ -48,8 +50,23 @@ class RegisterViewController: UIViewController {
         button.backgroundColor = UIColor(red: 29/255, green: 161/255, blue: 242/255, alpha: 1)
         button.layer.masksToBounds = true
         button.layer.cornerRadius = 25
+        button.isEnabled = false
         return button
     }()
+    
+    private var registerViewModel: RegisterViewModel
+    private var subscriptions: Set<AnyCancellable> = []
+    
+    
+    init(registerViewModel: RegisterViewModel) {
+        self.registerViewModel = registerViewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     
     
     override func viewDidLoad() {
@@ -59,9 +76,48 @@ class RegisterViewController: UIViewController {
         view.addSubview(emailTextField)
         view.addSubview(passwordTextField)
         view.addSubview(registerButton)
+        registerButton.addTarget(self, action: #selector(didTapRegister), for: .touchUpInside)
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapToDismiss)))
         configureConstraints()
+       // bindViewss()
     }
     
+    @objc private func didTapToDismiss() {
+         view.endEditing(true)
+    }
+    @objc private func didTapRegister() {
+        registerViewModel.createUser()
+    }
+    
+    
+    private func bindViewss() {
+        emailTextField.addTarget(self, action: #selector(didChangeEmailField), for: .editingChanged)
+        passwordTextField.addTarget(self, action: #selector(didChangePasswordFiled), for: .editingChanged)
+        registerViewModel.$isRegistrationValid.sink { [weak self] validation in
+            self?.registerButton.isEnabled = validation
+        }
+        .store(in: &subscriptions)
+        
+        registerViewModel.$user.sink { [weak self] user in
+            print(user)
+        }
+        .store(in: &subscriptions)
+    }
+    
+    deinit {
+            print("RegisterViewController деініціалізований")
+        }
+    
+    @objc func didChangePasswordFiled() {
+        registerViewModel.password = passwordTextField.text
+        registerViewModel.validRigestrationForm()
+    }
+    
+    
+    @objc private func didChangeEmailField() {
+        registerViewModel.email = emailTextField.text
+        registerViewModel.validRigestrationForm()
+    }
 
     private func configureConstraints() {
         let registerTitleLabelConstraints = [
