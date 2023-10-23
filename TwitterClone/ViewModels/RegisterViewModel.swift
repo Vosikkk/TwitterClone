@@ -30,7 +30,7 @@ class RegisterViewModel: ObservableObject {
     func validRigestrationForm() {
         guard let email = email,
               let password = password else { isRegistrationValid = false; return }
-        isRegistrationValid = userAuth.isValidEmail(email) && password.count >= 8
+        isRegistrationValid = email.isValidEmail() && password.count >= 8
     }
     
     func createUser() {
@@ -43,5 +43,7 @@ class RegisterViewModel: ObservableObject {
             } receiveValue: { [weak self] user in
                 self?.user = user
             }
+            .store(in: &subscriptions)
     }
 }
+

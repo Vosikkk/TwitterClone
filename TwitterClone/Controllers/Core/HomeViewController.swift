@@ -28,6 +28,12 @@ class HomeViewController: UIViewController {
         timelineTableView.delegate = self
         timelineTableView.dataSource = self
         configureNavigatioBar()
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            image: UIImage(systemName: "rectangle.portrait.and.arrow.right"),
+            style: .plain,
+            target: self,
+            action: #selector(didTapSignOut))
       
     }
     
@@ -49,16 +55,17 @@ class HomeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = false
-       
+        handleAuthentication()
+    }
+    
+    private func handleAuthentication() {
         if Auth.auth().currentUser == nil {
             let vc = UINavigationController(rootViewController: OnboardingViewController(registerViewModel: registerViewModel))
             vc.modalPresentationStyle = .fullScreen
-            print("fskjfhkls")
             present(vc, animated: false)
-            print("11")
         }
     }
-    
+        
     private func configureNavigatioBar() {
         let size: CGFloat = 36
         let logoImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: size, height: size))
@@ -72,6 +79,13 @@ class HomeViewController: UIViewController {
         let profileImage = UIImage(systemName: "person")
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: profileImage, style: .plain, target: self, action: #selector(didTapProfile))
     }
+    
+    
+    @objc private func didTapSignOut() {
+        try? Auth.auth().signOut()
+        handleAuthentication()
+    }
+    
     
     @objc private func didTapProfile() {
         let vc = ProfileViewController()

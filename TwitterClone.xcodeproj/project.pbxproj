@@ -19,6 +19,8 @@
 		38094BB82AD0345B0050F18D /* TweetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38094BB72AD0345B0050F18D /* TweetTableViewCell.swift */; };
 		3809BC962AE33E01005A9AD3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3809BC952AE33E01005A9AD3 /* GoogleService-Info.plist */; };
 		3809BC982AE33E2F005A9AD3 /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3809BC972AE33E2F005A9AD3 /* RegisterViewModel.swift */; };
+		3837818C2AE706F500BB6F3E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3837818B2AE706F500BB6F3E /* LoginViewController.swift */; };
+		383781902AE709C300BB6F3E /* CommonForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3837818F2AE709C300BB6F3E /* CommonForm.swift */; };
 		3887CF0E2ADB49320087BBE3 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 3887CF0D2ADB49320087BBE3 /* FirebaseAnalytics */; };
 		3887CF102ADB49320087BBE3 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = 3887CF0F2ADB49320087BBE3 /* FirebaseAnalyticsOnDeviceConversion */; };
 		3887CF122ADB49320087BBE3 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 3887CF112ADB49320087BBE3 /* FirebaseAnalyticsSwift */; };
@@ -69,6 +71,8 @@
 		38094BB72AD0345B0050F18D /* TweetTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetTableViewCell.swift; sourceTree = "<group>"; };
 		3809BC952AE33E01005A9AD3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3809BC972AE33E2F005A9AD3 /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
+		3837818B2AE706F500BB6F3E /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		3837818F2AE709C300BB6F3E /* CommonForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonForm.swift; sourceTree = "<group>"; };
 		3887CF442ADB4AF60087BBE3 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		38B204862AD589EC00C902BE /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		38B204882AD5965B00C902BE /* ProfileTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewHeader.swift; sourceTree = "<group>"; };
@@ -144,6 +148,7 @@
 				38094BA22AD025970050F18D /* LaunchScreen.storyboard */,
 				38094BA52AD025970050F18D /* Info.plist */,
 				3809BC952AE33E01005A9AD3 /* GoogleService-Info.plist */,
+				3837818F2AE709C300BB6F3E /* CommonForm.swift */,
 			);
 			path = TwitterClone;
 			sourceTree = "<group>";
@@ -185,6 +190,7 @@
 			children = (
 				3887CF442ADB4AF60087BBE3 /* OnboardingViewController.swift */,
 				38E6F6FE2ADD7099005DAE33 /* RegisterViewController.swift */,
+				3837818B2AE706F500BB6F3E /* LoginViewController.swift */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
@@ -328,6 +334,8 @@
 				3887CF452ADB4AF60087BBE3 /* OnboardingViewController.swift in Sources */,
 				38094BB52AD02A900050F18D /* DirectMessagesViewController.swift in Sources */,
 				38B204892AD5965B00C902BE /* ProfileTableViewHeader.swift in Sources */,
+				383781902AE709C300BB6F3E /* CommonForm.swift in Sources */,
+				3837818C2AE706F500BB6F3E /* LoginViewController.swift in Sources */,
 				38E6F6FF2ADD7099005DAE33 /* RegisterViewController.swift in Sources */,
 				38F7EFB72AD5DB2000B0FB73 /* ProfileCustomUIView.swift in Sources */,
 				38094BB82AD0345B0050F18D /* TweetTableViewCell.swift in Sources */,
