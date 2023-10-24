@@ -17,7 +17,7 @@ class HomeViewController: UIViewController {
         return tableView
     }()
     
-    private let registerViewModel: RegisterViewModel
+    private let authenticationViewModel: AuthenticationViewModel
     
     
     
@@ -37,14 +37,18 @@ class HomeViewController: UIViewController {
       
     }
     
-    init(registerViewModel: RegisterViewModel) {
-        self.registerViewModel = registerViewModel
+    init(authenticationViewModel: AuthenticationViewModel) {
+        self.authenticationViewModel = authenticationViewModel
         super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+   
+    deinit {
+            print("HomeViewController деініціалізований")
+        }
     
     
     override func viewDidLayoutSubviews() {
@@ -60,7 +64,7 @@ class HomeViewController: UIViewController {
     
     private func handleAuthentication() {
         if Auth.auth().currentUser == nil {
-            let vc = UINavigationController(rootViewController: OnboardingViewController(registerViewModel: registerViewModel))
+            let vc = UINavigationController(rootViewController: OnboardingViewController(authenticationViewModel: authenticationViewModel))
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: false)
         }
@@ -84,6 +88,7 @@ class HomeViewController: UIViewController {
     @objc private func didTapSignOut() {
         try? Auth.auth().signOut()
         handleAuthentication()
+        authenticationViewModel.clearData()
     }
     
     

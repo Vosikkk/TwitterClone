@@ -14,10 +14,10 @@ class MainTabBarViewController: UITabBarController {
         view.backgroundColor = .systemBackground
         
         let userAuth: AuthManager = UserAuth()
-        let registerViewModel = RegisterViewModel(userAuth: userAuth)
+        let authenticationViewModel = AuthenticationViewModel(userAuth: userAuth)
         
         
-        let vc1 = UINavigationController(rootViewController: HomeViewController(registerViewModel: registerViewModel))
+        let vc1 = UINavigationController(rootViewController: HomeViewController(authenticationViewModel: authenticationViewModel))
         let vc2 = UINavigationController(rootViewController: SearchViewController())
         let vc3 = UINavigationController(rootViewController: NotificationsViewController())
         let vc4 = UINavigationController(rootViewController: DirectMessagesViewController())

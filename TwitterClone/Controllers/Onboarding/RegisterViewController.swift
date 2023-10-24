@@ -9,7 +9,7 @@ import UIKit
 import Combine
 
 
-class RegisterViewController: UIViewController, CommonForm {
+class RegisterViewController: UIViewController, CommonFormView {
     
     
     var loginLabel: UILabel = {
@@ -56,12 +56,12 @@ class RegisterViewController: UIViewController, CommonForm {
     }()
     
     
-    private var registerViewModel: RegisterViewModel
+    private var authenticationViewModel: AuthenticationViewModel
     private var subscriptions: Set<AnyCancellable> = []
     
     
-    init(registerViewModel: RegisterViewModel) {
-        self.registerViewModel = registerViewModel
+    init(authenticationViewModel: AuthenticationViewModel) {
+        self.authenticationViewModel = authenticationViewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -81,30 +81,29 @@ class RegisterViewController: UIViewController, CommonForm {
         actionButton.addTarget(self, action: #selector(didTapRegister), for: .touchUpInside)
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapToDismiss)))
        
-        bindViewss()
+        bindViews()
     }
     
     @objc private func didTapToDismiss() {
          view.endEditing(true)
     }
     @objc private func didTapRegister() {
-        registerViewModel.createUser()
+        authenticationViewModel.createUser()
     }
     
     
-    private func bindViewss() {
+    private func bindViews() {
         emailTextFiled.addTarget(self, action: #selector(didChangeEmailField), for: .editingChanged)
         passwordTextField.addTarget(self, action: #selector(didChangePasswordFiled), for: .editingChanged)
-        registerViewModel.$isRegistrationValid.sink { [weak self] validation in
+        authenticationViewModel.$isAuthenticationValid.sink { [weak self] validation in
             self?.actionButton.isEnabled = validation
         }
         .store(in: &subscriptions)
         
-        registerViewModel.$user.sink { [weak self] user in
+        authenticationViewModel.$user.sink { [weak self] user in
             guard user != nil else { return }
           
             guard let vc = self?.navigationController?.viewControllers.first as? OnboardingViewController else { return }
-            print(vc)
             vc.dismiss(animated: true)
         }
         .store(in: &subscriptions)
@@ -116,13 +115,13 @@ class RegisterViewController: UIViewController, CommonForm {
         }
     
     @objc func didChangePasswordFiled() {
-        registerViewModel.password = passwordTextField.text
-        registerViewModel.validRigestrationForm()
+        authenticationViewModel.password = passwordTextField.text
+        authenticationViewModel.validateAuthenticationForm()
     }
     
     
     @objc private func didChangeEmailField() {
-        registerViewModel.email = emailTextFiled.text
-        registerViewModel.validRigestrationForm()
+        authenticationViewModel.email = emailTextFiled.text
+        authenticationViewModel.validateAuthenticationForm()
     }
 }

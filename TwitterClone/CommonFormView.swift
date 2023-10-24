@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-protocol CommonForm {
+protocol CommonFormView {
     
     var loginLabel: UILabel { get set }
     var emailTextFiled: UITextField { get set }
@@ -20,7 +20,7 @@ protocol CommonForm {
 }
 
 
-extension CommonForm {
+extension CommonFormView {
     
     func configureConstraints(in view: UIView) {
         let loginTitleLabelConstraints = [

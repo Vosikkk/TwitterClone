@@ -73,10 +73,10 @@ class OnboardingViewController: UIViewController {
         configureConstraints()
     }
     
-    private let registerViewModel: RegisterViewModel
+    private let authenticationViewModel: AuthenticationViewModel
     
-    init(registerViewModel: RegisterViewModel) {
-        self.registerViewModel = registerViewModel
+    init(authenticationViewModel: AuthenticationViewModel) {
+        self.authenticationViewModel = authenticationViewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -86,14 +86,19 @@ class OnboardingViewController: UIViewController {
     
     
     @objc private func didTapLogin() {
-        let vc = LoginViewController()
+        let vc = LoginViewController(authenticationViewModel: authenticationViewModel)
         navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc private func didTapCreateAccount() {
-        let vc = RegisterViewController(registerViewModel: registerViewModel)
+        let vc = RegisterViewController(authenticationViewModel: authenticationViewModel)
         navigationController?.pushViewController(vc, animated: true)
     }
+    
+    
+    deinit {
+            print("OnboardingViewController деініціалізований")
+        }
     
     private func configureConstraints() {
         let welcomeLabelConstraints = [
