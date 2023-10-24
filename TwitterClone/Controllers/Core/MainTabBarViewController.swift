@@ -14,7 +14,8 @@ class MainTabBarViewController: UITabBarController {
         view.backgroundColor = .systemBackground
         
         let userAuth: AuthManager = UserAuth()
-        let authenticationViewModel = AuthenticationViewModel(userAuth: userAuth)
+        let storageUserManager: DatabaseManager = StorageUserManager()
+        let authenticationViewModel = AuthenticationViewModel(userAuth: userAuth, storageUserManager: storageUserManager)
         
         
         let vc1 = UINavigationController(rootViewController: HomeViewController(authenticationViewModel: authenticationViewModel))

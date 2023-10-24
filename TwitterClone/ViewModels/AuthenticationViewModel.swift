@@ -15,15 +15,19 @@ class AuthenticationViewModel: ObservableObject {
     @Published var password: String?
     @Published var isAuthenticationValid: Bool = false
     @Published var user: User?
+    @Published var error: String?
     
     
     private var subscriptions: Set<AnyCancellable> = []
     
     
     private let userAuth: AuthManager
+    private let storageUserManager: DatabaseManager
     
-    init(userAuth: AuthManager) {
+    
+    init(userAuth: AuthManager, storageUserManager: DatabaseManager) {
         self.userAuth = userAuth
+        self.storageUserManager = storageUserManager
     }
     
     
@@ -38,12 +42,30 @@ class AuthenticationViewModel: ObservableObject {
               let password = password else { return }
         
         userAuth.registerUser(with: email, password: password)
-            .sink { _ in
-                
+            .handleEvents(receiveOutput: { [weak self] user in
+            self?.user = user
+            })
+            .sink { [weak self] completion in
+                if case .failure(let error) = completion {
+                    self?.error = error.localizedDescription
+                }
             } receiveValue: { [weak self] user in
-                self?.user = user
+                self?.createRecord(for: user)
             }
             .store(in: &subscriptions)
+    }
+    
+    private func createRecord(for user: User) {
+        storageUserManager.collectionUsers(add: user)
+            .sink { [weak self] completion in
+                if case .failure(let error) = completion {
+                    self?.error = error.localizedDescription
+                }
+            } receiveValue: { state in
+                print("Adding user record to database: \(state)")
+            }
+            .store(in: &subscriptions)
+
     }
     
     func loginUser() {
@@ -51,8 +73,10 @@ class AuthenticationViewModel: ObservableObject {
               let password = password else { return }
         
         userAuth.loginUser(with: email, password: password)
-            .sink { _ in
-                
+            .sink { [weak self] completion in
+                if case .failure(let error) = completion {
+                    self?.error = error.localizedDescription
+                }
             } receiveValue: { [weak self] user in
                 self?.user = user
             }
@@ -64,6 +88,7 @@ class AuthenticationViewModel: ObservableObject {
             password = nil
             isAuthenticationValid = false
             user = nil
+            error = nil
         }
 }
 

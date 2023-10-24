@@ -17,6 +17,8 @@ protocol CommonFormView {
     
     func configureConstraints(in view: UIView)
     func setupUI(in view: UIView)
+    
+    func presentAlert(with error: String, on controller: UIViewController)
 }
 
 
@@ -63,6 +65,13 @@ extension CommonFormView {
         view.addSubview(emailTextFiled)
         view.addSubview(passwordTextField)
         view.addSubview(actionButton)
+    }
+    
+    func presentAlert(with error: String, on controller: UIViewController) {
+        let alert = UIAlertController(title: "Error", message: error, preferredStyle: .alert)
+        let okeyButton = UIAlertAction(title: "OK", style: .default)
+        alert.addAction(okeyButton)
+        controller.present(alert, animated: true)
     }
 }
 

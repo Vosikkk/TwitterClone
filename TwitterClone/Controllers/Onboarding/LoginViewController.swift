@@ -9,7 +9,6 @@ import UIKit
 import Combine
 
 class LoginViewController: UIViewController, CommonFormView {
-   
     
     private var subscriptions: Set<AnyCancellable> = []
     
@@ -105,10 +104,18 @@ class LoginViewController: UIViewController, CommonFormView {
            vc.dismiss(animated: true)
        }
        .store(in: &subscriptions)
-       
+        
+        authenticationViewModel.$error.sink { [weak self] errorString in
+            guard let error = errorString else { return }
+            if let strongSelf = self {
+                strongSelf.presentAlert(with: error, on: strongSelf)
+            }
+        }
+        .store(in: &subscriptions)
    }
    
    deinit {
+           authenticationViewModel.error = nil
            print("RegisterViewController деініціалізований")
        }
    

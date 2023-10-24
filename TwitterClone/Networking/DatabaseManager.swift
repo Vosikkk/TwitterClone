@@ -1,0 +1,36 @@
+//
+//  DatabaseManager.swift
+//  TwitterClone
+//
+//  Created by Саша Восколович on 24.10.2023.
+//
+
+import Foundation
+import Firebase
+import FirebaseFirestore
+import FirebaseFirestoreCombineSwift
+import Combine
+
+protocol DatabaseManager {
+    var db: Firestore { get set }
+    var userPath: String { get set }
+    func collectionUsers(add user: User) -> AnyPublisher<Bool, Error>
+    
+}
+
+class StorageUserManager: DatabaseManager  {
+    
+    
+    var db: Firestore = Firestore.firestore()
+    
+    var userPath: String = "users"
+    
+    func collectionUsers(add user: User) -> AnyPublisher<Bool, Error> {
+        let twitterUser = TwitterUser(from: user)
+        return db.collection(userPath).document(twitterUser.id).setData(from: twitterUser)
+            .map { _ in
+                return true
+            }
+            .eraseToAnyPublisher()
+    }
+}
