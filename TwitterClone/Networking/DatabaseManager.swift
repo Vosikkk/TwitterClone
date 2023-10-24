@@ -15,11 +15,11 @@ protocol DatabaseManager {
     var db: Firestore { get set }
     var userPath: String { get set }
     func collectionUsers(add user: User) -> AnyPublisher<Bool, Error>
+    func collectionUsers(retreive id: String) -> AnyPublisher<TwitterUser, Error>
     
 }
 
 class StorageUserManager: DatabaseManager  {
-    
     
     var db: Firestore = Firestore.firestore()
     
@@ -28,9 +28,13 @@ class StorageUserManager: DatabaseManager  {
     func collectionUsers(add user: User) -> AnyPublisher<Bool, Error> {
         let twitterUser = TwitterUser(from: user)
         return db.collection(userPath).document(twitterUser.id).setData(from: twitterUser)
-            .map { _ in
-                return true
-            }
+            .map { _ in return true }
+            .eraseToAnyPublisher()
+    }
+    
+    func collectionUsers(retreive id: String) -> AnyPublisher<TwitterUser, Error> {
+        db.collection(userPath).document(id).getDocument()
+            .tryMap { try $0.data(as: TwitterUser.self) }
             .eraseToAnyPublisher()
     }
 }

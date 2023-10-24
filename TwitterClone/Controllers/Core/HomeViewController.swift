@@ -7,7 +7,7 @@
 
 import UIKit
 import FirebaseAuth
-
+import Combine
 class HomeViewController: UIViewController {
 
     
@@ -18,8 +18,8 @@ class HomeViewController: UIViewController {
     }()
     
     private let authenticationViewModel: AuthenticationViewModel
-    
-    
+    private let homeViewModel: HomeViewModel
+    private var subscriptions: Set<AnyCancellable> = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,11 +34,13 @@ class HomeViewController: UIViewController {
             style: .plain,
             target: self,
             action: #selector(didTapSignOut))
+        bindViews()
       
     }
     
-    init(authenticationViewModel: AuthenticationViewModel) {
+    init(authenticationViewModel: AuthenticationViewModel, homeViewModel: HomeViewModel) {
         self.authenticationViewModel = authenticationViewModel
+        self.homeViewModel = homeViewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -60,6 +62,22 @@ class HomeViewController: UIViewController {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = false
         handleAuthentication()
+        homeViewModel.retreiveUser()
+    }
+    
+    func compliteUserOnboarding() {
+        let vc = ProfileDataFormViewController()
+        present(vc, animated: true)
+    }
+    
+    private func bindViews() {
+        homeViewModel.$user.sink { [weak self] user in
+            guard let user = user else { return }
+            if !user.isUserOnboarded {
+                self?.compliteUserOnboarding()
+            }
+        }
+        .store(in: &subscriptions)
     }
     
     private func handleAuthentication() {

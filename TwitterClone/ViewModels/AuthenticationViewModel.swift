@@ -43,7 +43,7 @@ class AuthenticationViewModel: ObservableObject {
         
         userAuth.registerUser(with: email, password: password)
             .handleEvents(receiveOutput: { [weak self] user in
-            self?.user = user
+                self?.user = user
             })
             .sink { [weak self] completion in
                 if case .failure(let error) = completion {
@@ -65,7 +65,7 @@ class AuthenticationViewModel: ObservableObject {
                 print("Adding user record to database: \(state)")
             }
             .store(in: &subscriptions)
-
+        
     }
     
     func loginUser() {
@@ -84,11 +84,12 @@ class AuthenticationViewModel: ObservableObject {
     }
     
     func clearData() {
-            email = nil
-            password = nil
-            isAuthenticationValid = false
-            user = nil
-            error = nil
-        }
+        subscriptions.forEach { $0.cancel() }
+        email = nil
+        password = nil
+        isAuthenticationValid = false
+        user = nil
+        error = nil
+    }
 }
 

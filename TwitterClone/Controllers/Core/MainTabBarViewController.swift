@@ -15,10 +15,11 @@ class MainTabBarViewController: UITabBarController {
         
         let userAuth: AuthManager = UserAuth()
         let storageUserManager: DatabaseManager = StorageUserManager()
+        let homeViewModel = HomeViewModel(storageUserManager: storageUserManager)
         let authenticationViewModel = AuthenticationViewModel(userAuth: userAuth, storageUserManager: storageUserManager)
         
         
-        let vc1 = UINavigationController(rootViewController: HomeViewController(authenticationViewModel: authenticationViewModel))
+        let vc1 = UINavigationController(rootViewController: HomeViewController(authenticationViewModel: authenticationViewModel, homeViewModel: homeViewModel))
         let vc2 = UINavigationController(rootViewController: SearchViewController())
         let vc3 = UINavigationController(rootViewController: NotificationsViewController())
         let vc4 = UINavigationController(rootViewController: DirectMessagesViewController())
