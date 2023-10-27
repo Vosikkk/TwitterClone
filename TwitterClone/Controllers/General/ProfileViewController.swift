@@ -9,9 +9,14 @@ import UIKit
 
 class ProfileViewController: UIViewController {
 
+    
+    // MARK: - Properties
+    
     private var isStatusBarHidden: Bool = true
     
     var profileAvatar = ProfileCustomUIView()
+    
+    private let commonFactory: CommonFactory
     
     private let statusBar: UIView = {
         let view = UIView()
@@ -30,7 +35,18 @@ class ProfileViewController: UIViewController {
     }()
     
     
+    init(commonFactory: CommonFactory) {
+        self.commonFactory = commonFactory
+        super.init(nibName: nil, bundle: nil)
+    }
     
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    
+    
+    // MARK: - Controller life cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,13 +54,20 @@ class ProfileViewController: UIViewController {
         navigationItem.title = "Profile"
         view.addSubview(profileTableView)
         
-        let header = ProfileTableViewHeader(frame: CGRect(x: 0, y: 0, width: profileTableView.frame.width, height: 420))
+        let header = ProfileTableViewHeader(frame:
+                                                CGRect(x: 0, y: 0,
+                                                       width: profileTableView.frame.width,
+                                                       height: SizeConstants.headerHeight),
+                                            commonFactory: commonFactory)
+        
         navigationController?.navigationBar.isHidden = true
+        
         profileTableView.dataSource = self
         profileTableView.delegate = self
         profileTableView.tableHeaderView = header   
         profileTableView.contentInsetAdjustmentBehavior = .never
         profileTableView.addSubview(profileAvatar)
+        
         view.addSubview(statusBar)
         
         configureConstraints()
@@ -53,11 +76,13 @@ class ProfileViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         profileAvatar.frame = CGRect(x: Constants.avatarX,
-                                     y: (profileTableView.tableHeaderView!.bounds.height - Constants.avatarHeight) / 2.8,
-                                     width: Constants.avatarWidth,
-                                     height: Constants.avatarHeight)
+                                     y: (profileTableView.tableHeaderView!.bounds.height - SizeConstants.avatarHeight) / 2.8,
+                                     width: SizeConstants.avatarWidth,
+                                     height: SizeConstants.avatarHeight)
        
     }
+    
+    // MARK: - Func
     
     private func updateParallaxOffset(_ offset: CGFloat) {
         let parallaxOffset = offset / 2 // Змініть значення залежно від бажаного ефекту
@@ -101,15 +126,16 @@ class ProfileViewController: UIViewController {
             statusBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             statusBar.topAnchor.constraint(equalTo: view.topAnchor),
             statusBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            statusBar.heightAnchor.constraint(equalToConstant: AppStyle.statusBarHeight + 50)
+            statusBar.heightAnchor.constraint(equalToConstant: AppStyle.statusBarHeight + SizeConstants.statusBarOffset)
         ]
         NSLayoutConstraint.activate(statusBarConstraints)
         NSLayoutConstraint.activate(profileTableViewConstraints)
     }
     
+    
+    // MARK: - Nested Type
+    
     private struct Constants {
-        static let avatarWidth: CGFloat = 80
-        static let avatarHeight: CGFloat = 80
         static let avatarX: CGFloat = 10
         static let minScale: CGFloat = 0.7
         static let maxScale: CGFloat = 1.0
@@ -119,10 +145,23 @@ class ProfileViewController: UIViewController {
 
         static let animationDuration: TimeInterval = 0.3
     }
+    
+    private struct SizeConstants {
+        static let headerHeight: CGFloat = 420
+        static let avatarWidth: CGFloat = 80
+        static let avatarHeight: CGFloat = 80
+        static let tableViewNumberOfRow: Int = 4
+        static let statusBarHeightDefault: CGFloat = 80
+        static let statusBarOffset: CGFloat = 50
+    }
 }
+
+
+// MARK: - UITableViewDelegate & UITableViewDataSource
+
 extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return SizeConstants.tableViewNumberOfRow
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -140,6 +179,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         updateStatusBar(yOffset)
       }
 }
+
 struct AppStyle {
     static var statusBarHeight: CGFloat {
         if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,

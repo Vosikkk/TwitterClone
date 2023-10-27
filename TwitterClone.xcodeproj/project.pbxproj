@@ -22,6 +22,9 @@
 		3837818C2AE706F500BB6F3E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3837818B2AE706F500BB6F3E /* LoginViewController.swift */; };
 		383781902AE709C300BB6F3E /* CommonFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3837818F2AE709C300BB6F3E /* CommonFormView.swift */; };
 		3873802E2AEBF34C008604E7 /* ButtonFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3873802D2AEBF34C008604E7 /* ButtonFactory.swift */; };
+		387380302AEC4614008604E7 /* TextFieldFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3873802F2AEC4614008604E7 /* TextFieldFactory.swift */; };
+		387380322AEC4656008604E7 /* CommonFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 387380312AEC4656008604E7 /* CommonFactory.swift */; };
+		387380342AEC63A6008604E7 /* LabelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 387380332AEC63A6008604E7 /* LabelFactory.swift */; };
 		3887CF0E2ADB49320087BBE3 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 3887CF0D2ADB49320087BBE3 /* FirebaseAnalytics */; };
 		3887CF102ADB49320087BBE3 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = 3887CF0F2ADB49320087BBE3 /* FirebaseAnalyticsOnDeviceConversion */; };
 		3887CF122ADB49320087BBE3 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 3887CF112ADB49320087BBE3 /* FirebaseAnalyticsSwift */; };
@@ -80,6 +83,9 @@
 		3837818B2AE706F500BB6F3E /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		3837818F2AE709C300BB6F3E /* CommonFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonFormView.swift; sourceTree = "<group>"; };
 		3873802D2AEBF34C008604E7 /* ButtonFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonFactory.swift; sourceTree = "<group>"; };
+		3873802F2AEC4614008604E7 /* TextFieldFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldFactory.swift; sourceTree = "<group>"; };
+		387380312AEC4656008604E7 /* CommonFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonFactory.swift; sourceTree = "<group>"; };
+		387380332AEC63A6008604E7 /* LabelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelFactory.swift; sourceTree = "<group>"; };
 		3887CF442ADB4AF60087BBE3 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		38B204862AD589EC00C902BE /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		38B204882AD5965B00C902BE /* ProfileTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewHeader.swift; sourceTree = "<group>"; };
@@ -161,8 +167,11 @@
 				38094BA22AD025970050F18D /* LaunchScreen.storyboard */,
 				38094BA52AD025970050F18D /* Info.plist */,
 				3809BC952AE33E01005A9AD3 /* GoogleService-Info.plist */,
+				387380332AEC63A6008604E7 /* LabelFactory.swift */,
 				3837818F2AE709C300BB6F3E /* CommonFormView.swift */,
 				3873802D2AEBF34C008604E7 /* ButtonFactory.swift */,
+				3873802F2AEC4614008604E7 /* TextFieldFactory.swift */,
+				387380312AEC4656008604E7 /* CommonFactory.swift */,
 			);
 			path = TwitterClone;
 			sourceTree = "<group>";
@@ -355,9 +364,12 @@
 				38F958E22AE7EF8F0074544E /* HomeViewModel.swift in Sources */,
 				38094B982AD025960050F18D /* AppDelegate.swift in Sources */,
 				38094BB32AD02A650050F18D /* NotificationsViewController.swift in Sources */,
+				387380322AEC4656008604E7 /* CommonFactory.swift in Sources */,
 				38EC801C2AE321E300E5D1F9 /* UserAuth.swift in Sources */,
 				38094B9A2AD025960050F18D /* SceneDelegate.swift in Sources */,
 				38094BAE2AD029F20050F18D /* HomeViewController.swift in Sources */,
+				387380342AEC63A6008604E7 /* LabelFactory.swift in Sources */,
+				387380302AEC4614008604E7 /* TextFieldFactory.swift in Sources */,
 				38F958E42AE7F82D0074544E /* ProfileDataFormViewController.swift in Sources */,
 				38F958DE2AE7E3B90074544E /* TwitterUser.swift in Sources */,
 				38B204872AD589EC00C902BE /* ProfileViewController.swift in Sources */,

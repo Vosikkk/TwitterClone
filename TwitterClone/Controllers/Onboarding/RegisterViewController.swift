@@ -11,51 +11,42 @@ import Combine
 
 class RegisterViewController: UIViewController, CommonFormView {
     
-    private let buttonFactory: ButtonFactory
     
+    // MARK: - Properties
+    
+    private let commonFactory: CommonFactory
+    
+    private var authenticationViewModel: AuthenticationViewModel
+    
+    private var subscriptions: Set<AnyCancellable> = []
+    
+    lazy var passwordTextField: UITextField = {
+        return commonFactory.textFieldFactory.createTextField(with: TitleConstants.passwordTextFieldPlaceholder)
+    }()
+    
+    lazy var emailTextFiled: UITextField = {
+        return commonFactory.textFieldFactory.createTextField(with: TitleConstants.emailTextFiledPlaceholder)
+    }()
+    
+    lazy var actionButton: UIButton = {
+        return commonFactory.buttonFactory.createMainButton(with: TitleConstants.actionButtonTitle, 
+                                                            fontSize: FontSizeConstants.actionButtonFontSize)
+    }()
     
     var loginLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Create your account"
-        label.font = .systemFont(ofSize: 32, weight: .bold)
+        label.text = TitleConstants.loginLabelTitle
+        label.font = .systemFont(ofSize: FontSizeConstants.loginLabelFontSize, weight: .bold)
         return label
     }()
     
-    var emailTextFiled: UITextField = {
-        let textFiled = UITextField()
-        textFiled.translatesAutoresizingMaskIntoConstraints = false
-        textFiled.attributedPlaceholder = NSAttributedString(
-            string: "Email",
-            attributes: [.foregroundColor: UIColor.gray]
-        )
-        textFiled.keyboardType = .emailAddress
-        return textFiled
-    }()
     
-    var passwordTextField: UITextField = {
-        let textFiled = UITextField()
-        textFiled.translatesAutoresizingMaskIntoConstraints = false
-        textFiled.attributedPlaceholder = NSAttributedString(
-            string: "Password",
-            attributes: [.foregroundColor: UIColor.gray]
-        )
-        textFiled.isSecureTextEntry = true
-        return textFiled
-    }()
+    // MARK: - Init
     
-    lazy var actionButton: UIButton = {
-        return buttonFactory.createEnterButton(with: "Create account")
-    }()
-    
-    
-    private var authenticationViewModel: AuthenticationViewModel
-    private var subscriptions: Set<AnyCancellable> = []
-    
-    
-    init(authenticationViewModel: AuthenticationViewModel, buttonFactory: ButtonFactory) {
+    init(authenticationViewModel: AuthenticationViewModel, commonFactory: CommonFactory) {
         self.authenticationViewModel = authenticationViewModel
-        self.buttonFactory = buttonFactory
+        self.commonFactory = commonFactory
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -63,7 +54,12 @@ class RegisterViewController: UIViewController, CommonFormView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        authenticationViewModel.error = nil
+        print("RegisterViewController деініціалізований")
+    }
     
+    // MARK: - Controller Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -78,13 +74,29 @@ class RegisterViewController: UIViewController, CommonFormView {
         bindViews()
     }
     
+    
+    // MARK: - @objc Methods
+    
     @objc private func didTapToDismiss() {
          view.endEditing(true)
     }
+    
     @objc private func didTapRegister() {
         authenticationViewModel.createUser()
     }
     
+    @objc func didChangePasswordFiled() {
+        authenticationViewModel.password = passwordTextField.text
+        authenticationViewModel.validateAuthenticationForm()
+    }
+    
+    
+    @objc private func didChangeEmailField() {
+        authenticationViewModel.email = emailTextFiled.text
+        authenticationViewModel.validateAuthenticationForm()
+    }
+    
+    // MARK: - Func
     
     private func bindViews() {
         emailTextFiled.addTarget(self, action: #selector(didChangeEmailField), for: .editingChanged)
@@ -112,19 +124,17 @@ class RegisterViewController: UIViewController, CommonFormView {
     }
     
     
-    deinit {
-            authenticationViewModel.error = nil
-            print("RegisterViewController деініціалізований")
-        }
+    // MARK: - Nested Type
     
-    @objc func didChangePasswordFiled() {
-        authenticationViewModel.password = passwordTextField.text
-        authenticationViewModel.validateAuthenticationForm()
+    private struct FontSizeConstants {
+        static let actionButtonFontSize: CGFloat = 16
+        static let loginLabelFontSize: CGFloat = 32
     }
     
-    
-    @objc private func didChangeEmailField() {
-        authenticationViewModel.email = emailTextFiled.text
-        authenticationViewModel.validateAuthenticationForm()
+    private struct TitleConstants {
+        static let actionButtonTitle = "Create account"
+        static let emailTextFiledPlaceholder = "Email"
+        static let passwordTextFieldPlaceholder = "Password"
+        static let loginLabelTitle = "Create your account"
     }
 }

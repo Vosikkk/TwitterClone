@@ -10,7 +10,9 @@ import FirebaseAuth
 import Combine
 
 class HomeViewController: UIViewController {
-
+    
+    
+    // MARK: - Properties
     
     private let timelineTableView: UITableView = {
         let tableView = UITableView()
@@ -19,10 +21,34 @@ class HomeViewController: UIViewController {
     }()
     
     private let authenticationViewModel: AuthenticationViewModel
-    private let homeViewModel: HomeViewModel
-    private var subscriptions: Set<AnyCancellable> = []
-    private let buttonFactory: ButtonFactory
     
+    private let homeViewModel: HomeViewModel
+    
+    private var subscriptions: Set<AnyCancellable> = []
+    
+    private let commonFactory: CommonFactory
+    
+    
+    
+    // MARK: - Init
+    
+    init(authenticationViewModel: AuthenticationViewModel, homeViewModel: HomeViewModel, commonFactory: CommonFactory) {
+        self.authenticationViewModel = authenticationViewModel
+        self.homeViewModel = homeViewModel
+        self.commonFactory = commonFactory
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        print("HomeViewController деініціалізований")
+    }
+    
+    
+    // MARK: - Controller life cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,7 +56,7 @@ class HomeViewController: UIViewController {
         
         timelineTableView.delegate = self
         timelineTableView.dataSource = self
-        configureNavigatioBar()
+        configureNavigatiorBar()
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             image: UIImage(systemName: "rectangle.portrait.and.arrow.right"),
@@ -38,24 +64,8 @@ class HomeViewController: UIViewController {
             target: self,
             action: #selector(didTapSignOut))
         bindViews()
-      
+        
     }
-    
-    init(authenticationViewModel: AuthenticationViewModel, homeViewModel: HomeViewModel, buttonFactory: ButtonFactory) {
-        self.authenticationViewModel = authenticationViewModel
-        self.homeViewModel = homeViewModel
-        self.buttonFactory = buttonFactory
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-   
-    deinit {
-            print("HomeViewController деініціалізований")
-        }
-    
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -69,8 +79,11 @@ class HomeViewController: UIViewController {
         homeViewModel.retreiveUser()
     }
     
+    
+    // MARK: - Func
+    
     func compliteUserOnboarding() {
-        let vc = ProfileDataFormViewController(buttonFactory: buttonFactory)
+        let vc = ProfileDataFormViewController(commonFactory: commonFactory)
         present(vc, animated: true)
     }
     
@@ -86,19 +99,31 @@ class HomeViewController: UIViewController {
     
     private func handleAuthentication() {
         if Auth.auth().currentUser == nil {
-            let vc = UINavigationController(rootViewController: OnboardingViewController(authenticationViewModel: authenticationViewModel, buttonFactory: buttonFactory))
+            let vc = UINavigationController(
+                rootViewController:
+                    OnboardingViewController(authenticationViewModel: authenticationViewModel, commonFactory: commonFactory))
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: false)
         }
     }
+    
+    private func configureNavigatiorBar() {
         
-    private func configureNavigatioBar() {
-        let size: CGFloat = 36
-        let logoImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: size, height: size))
+        let logoImageView = UIImageView(frame:
+                                            CGRect(x: PositionConstants.logoImageViewX,
+                                                   y: PositionConstants.logoImageViewY,
+                                                   width: SizeConstants.widthForNavigatorView,
+                                                   height: SizeConstants.heightForNavigatorView))
+        
         logoImageView.contentMode = .scaleAspectFill
         logoImageView.image = UIImage(named: "twitter_logo")
         
-        let middleView = UIView(frame: CGRect(x: 0, y: 0, width: size, height: size))
+        let middleView = UIView(frame:
+                                    CGRect(x: PositionConstants.middleViewX,
+                                           y: PositionConstants.middleViewY,
+                                           width: SizeConstants.widthForNavigatorView,
+                                           height: SizeConstants.heightForNavigatorView))
+        
         middleView.addSubview(logoImageView)
         navigationItem.titleView = middleView
         
@@ -106,6 +131,8 @@ class HomeViewController: UIViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: profileImage, style: .plain, target: self, action: #selector(didTapProfile))
     }
     
+    
+    // MARK: - @objc Func
     
     @objc private func didTapSignOut() {
         try? Auth.auth().signOut()
@@ -115,14 +142,33 @@ class HomeViewController: UIViewController {
     
     
     @objc private func didTapProfile() {
-        let vc = ProfileViewController()
+        let vc = ProfileViewController(commonFactory: commonFactory)
         navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    // MARK: - Nested Type
+    
+    private struct SizeConstants {
+        static let widthForNavigatorView: CGFloat = 36
+        static let heightForNavigatorView: CGFloat = 36
+        static let numberOfRows: Int = 10
+    }
+    
+    private struct PositionConstants {
+        static let logoImageViewX: CGFloat = 0
+        static let logoImageViewY: CGFloat = 0
+        static let middleViewX: CGFloat = 0
+        static let middleViewY: CGFloat = 0
+        
     }
 }
 
+
+// MARK: - UITableViewDelegate & UITableViewDataSource
+
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return SizeConstants.numberOfRows
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -131,6 +177,8 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
 }
+
+// MARK: - TweetTableViewCellDelegate
 
 extension HomeViewController: TweetTableViewCellDelegate {
     func tweetTableViewCellDidTapReply() {

@@ -9,6 +9,8 @@ import UIKit
 
 class ProfileTableViewHeader: UIView {
     
+    private let commonFactory: CommonFactory
+    
     private enum SectionTabs: String {
         case posts = "Posts"
         case replies = "Replies"
@@ -39,7 +41,7 @@ class ProfileTableViewHeader: UIView {
     private let indicators: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = UIColor(red: 29/255, green: 161/255, blue: 242/255, alpha: 1)
+        view.backgroundColor = ColorConstants.colorView
         return view
     }()
     
@@ -77,54 +79,61 @@ class ProfileTableViewHeader: UIView {
         return stackView
     }()
     
-    private let followersTextLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Followers"
-        label.textColor = .secondaryLabel
-        label.font = .systemFont(ofSize: 14, weight: .regular)
-        return label
+    private lazy var displayNameLabel: UILabel = {
+        return commonFactory.labelFactory.createLabel(
+            with: "Sasha",
+            textColor: .label,
+            fontSize: .systemFont(ofSize: FontSizeConstants.displayNameLabelFontSize, 
+                                  weight: FontWeightConstants.displayNameLabelWeight))
     }()
     
+    private lazy var userNameLabel: UILabel = {
+        return commonFactory.labelFactory.createLabel(
+            with: "@vosikk",
+            textColor: .secondaryLabel,
+            fontSize: .systemFont(ofSize: FontSizeConstants.userNameLabelFontSize, 
+                                  weight: FontWeightConstants.userNameLabelWeight))
+    }()
     
+    private lazy var followersTextLabel: UILabel = {
+        return commonFactory.labelFactory.createLabel(
+            with: "Followers",
+            textColor: .secondaryLabel,
+            fontSize: .systemFont(ofSize: FontSizeConstants.followersTextLabelFontSize, 
+                                  weight: FontWeightConstants.followersTextLabelWeight))
+    }()
     
-    private let followersCountLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .systemFont(ofSize: 14, weight: .bold)
-        label.text = "2M"
-        label.textColor = .label
-        return label
+    private lazy var followersCountLabel: UILabel = {
+        return commonFactory.labelFactory.createLabel(
+            with: "2M",
+            textColor: .label,
+            fontSize: .systemFont(ofSize: FontSizeConstants.followersCountLabelFontSize, 
+                                  weight: FontWeightConstants.followersCountLabelWeight))
     }()
    
-    
-    private let followingTextLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Following"
-        label.textColor = .secondaryLabel
-        label.font = .systemFont(ofSize: 14, weight: .regular)
-        return label
+    private lazy var followingTextLabel: UILabel = {
+        return commonFactory.labelFactory.createLabel(
+            with: "Following",
+            textColor: .secondaryLabel,
+            fontSize: .systemFont(ofSize: FontSizeConstants.followingTextLabelFontSize, 
+                                  weight: FontWeightConstants.followingTextLabelWeight))
     }()
     
-    private let followingCountLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .systemFont(ofSize: 14, weight: .bold)
-        label.text = "215"
-        label.textColor = .label
-        return label
-        
+    private lazy var followingCountLabel: UILabel = {
+        return commonFactory.labelFactory.createLabel(
+            with: "215",
+            textColor: .label,
+            fontSize: .systemFont(ofSize: FontSizeConstants.followingCountLabelFontSize, 
+                                  weight: FontWeightConstants.followingCountLabelWeight))
     }()
     
     
-    private let joinedDateLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .systemFont(ofSize: 14, weight: .regular)
-        label.text = "Joined May 2021"
-        label.textColor = .secondaryLabel
-        return label
+    private lazy var joinedDateLabel: UILabel = {
+        return commonFactory.labelFactory.createLabel(
+            with: "Joined May 2021",
+            textColor: .secondaryLabel,
+            fontSize: .systemFont(ofSize: FontSizeConstants.joinedDateLabelFontSize, 
+                                  weight: FontWeightConstants.joinedDateLabelWeight))
     }()
     
     
@@ -145,27 +154,7 @@ class ProfileTableViewHeader: UIView {
         label.textColor = .label
         return label
     }()
-    
-    
-    private let displayNameLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Sasha"
-        label.font = .systemFont(ofSize: 22, weight: .bold)
-        label.textColor = .label
-        return label
-    }()
-    
-    private let userNameLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "@vosikk"
-        label.textColor = .secondaryLabel
-        label.font = .systemFont(ofSize: 18, weight: .regular)
-        return label
-    }()
-    
-    
+
     
     private let profileHeaderImageView: UIImageView = {
         let imageView = UIImageView()
@@ -176,7 +165,8 @@ class ProfileTableViewHeader: UIView {
         return imageView
     }()
     
-    override init(frame: CGRect) {
+    init(frame: CGRect, commonFactory: CommonFactory) {
+        self.commonFactory = commonFactory
         super.init(frame: frame)
         addSubview(profileHeaderImageView)
         addSubview(displayNameLabel)
@@ -199,7 +189,7 @@ class ProfileTableViewHeader: UIView {
     }
     
     override func layoutSubviews() {
-            super.layoutSubviews()
+        super.layoutSubviews()
     }
     
     private func configureStackButtons() {
@@ -316,27 +306,28 @@ class ProfileTableViewHeader: UIView {
             trailingAnchors.append(trailingAnchor)
         }
     }
+    
+    private struct FontSizeConstants {
+        static let displayNameLabelFontSize: CGFloat = 22
+        static let userNameLabelFontSize: CGFloat = 18
+        static let followersTextLabelFontSize: CGFloat = 14
+        static let followersCountLabelFontSize: CGFloat = 14
+        static let followingTextLabelFontSize: CGFloat = 14
+        static let followingCountLabelFontSize: CGFloat = 14
+        static let joinedDateLabelFontSize: CGFloat = 14
+    }
+    private struct FontWeightConstants {
+        static let displayNameLabelWeight: UIFont.Weight = .bold
+        static let userNameLabelWeight: UIFont.Weight = .regular
+        static let followersTextLabelWeight: UIFont.Weight = .regular
+        static let followersCountLabelWeight: UIFont.Weight = .bold
+        static let followingTextLabelWeight: UIFont.Weight = .regular
+        static let followingCountLabelWeight: UIFont.Weight = .bold
+        static let joinedDateLabelWeight: UIFont.Weight = .regular
+    }
 }
 
-//    private let profileAvatarImageView: UIImageView = {
-//        let imageView = UIImageView()
-//        imageView.clipsToBounds = true
-//        imageView.layer.masksToBounds = true
-//        imageView.layer.cornerRadius = 40
-//        imageView.image = UIImage(systemName: "person")
-//        imageView.backgroundColor = .blue
-//        imageView.translatesAutoresizingMaskIntoConstraints = false
-//        return imageView
-//    }()
 
-//addSubview(profileAvatarImageView)
-//        let profileAvatarImageViewConstraints = [
-//            profileAvatarImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-//            profileAvatarImageView.centerYAnchor.constraint(equalTo: profileHeaderImageView.bottomAnchor, constant: 10),
-//            profileAvatarImageView.widthAnchor.constraint(equalToConstant: 80),
-//            profileAvatarImageView.heightAnchor.constraint(equalToConstant: 80)
-//        ]
-//        NSLayoutConstraint.activate(profileAvatarImageViewConstraints)
 extension RawRepresentable {
     static prefix func ~(rhs: Self) -> Self.RawValue {
         rhs.rawValue

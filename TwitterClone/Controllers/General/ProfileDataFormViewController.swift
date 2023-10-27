@@ -9,8 +9,13 @@ import UIKit
 
 class ProfileDataFormViewController: UIViewController {
 
+    // MARK: - Properties
     
-    private let buttonFactory: ButtonFactory
+    private let commonFactory: CommonFactory
+    
+    lazy var submitButton: UIButton = {
+        return commonFactory.buttonFactory.createMainButton(with: "Submit", fontSize: 16)
+    }()
     
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -84,13 +89,12 @@ class ProfileDataFormViewController: UIViewController {
         return textView
     }()
     
-    lazy var submitButton: UIButton = {
-        return buttonFactory.createEnterButton(with: "Submit")
-    }()
+   
     
+    // MARK: - Init
     
-    init(buttonFactory: ButtonFactory) {
-        self.buttonFactory = buttonFactory
+    init(commonFactory: CommonFactory) {
+        self.commonFactory = commonFactory
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -99,21 +103,20 @@ class ProfileDataFormViewController: UIViewController {
     }
     
     
+    // MARK: - Controller life cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         view.backgroundColor = .systemBackground
-        
-        
-        
         view.addSubview(scrollView)
+        
         scrollView.addSubview(hintLabel)
         scrollView.addSubview(dispalyNameTextField)
         scrollView.addSubview(userNameTextField)
         scrollView.addSubview(avatarPlaceholderImageView)
         scrollView.addSubview(bioTextView)
         scrollView.addSubview(submitButton)
-        
-        
         
         
         isModalInPresentation = true
@@ -123,6 +126,8 @@ class ProfileDataFormViewController: UIViewController {
         configureConstraints()
     }
     
+    
+    // MARK: - Func
     
     private func configureConstraints() {
 
@@ -183,6 +188,9 @@ class ProfileDataFormViewController: UIViewController {
         NSLayoutConstraint.activate(submitButtonConstraints)
     }
 }
+
+
+// MARK: - UITextViewDelegate
 
 extension ProfileDataFormViewController: UITextViewDelegate {
     

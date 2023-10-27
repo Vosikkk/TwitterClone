@@ -7,22 +7,28 @@
 
 import UIKit
 
+struct ColorConstants {
+    static let colorButton = UIColor(red: 29/255, green: 161/255, blue: 242/255, alpha: 1)
+    static let colorView = UIColor(red: 29/255, green: 161/255, blue: 242/255, alpha: 1)
+}
 
 protocol ButtonFactoryProtocol {
-    func createEnterButton(with name: String) -> UIButton
+    func createMainButton(with name: String, fontSize: CGFloat) -> UIButton
 }
 
 final class ButtonFactory: ButtonFactoryProtocol {
-    func createEnterButton(with name: String) -> UIButton {
+    
+    func createMainButton(with name: String, fontSize: CGFloat) -> UIButton {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle(name, for: .normal)
         button.tintColor = .white
-        button.titleLabel?.font = .systemFont(ofSize: 16, weight: .bold)
-        button.backgroundColor = UIColor(red: 29/255, green: 161/255, blue: 242/255, alpha: 1)
+        button.titleLabel?.font = .systemFont(ofSize: fontSize, weight: .bold)
+        button.backgroundColor = ColorConstants.colorButton
         button.layer.masksToBounds = true
         button.layer.cornerRadius = 25
         button.isEnabled = false
         return button
     }
 }
+
