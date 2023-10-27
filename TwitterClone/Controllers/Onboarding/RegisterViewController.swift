@@ -11,6 +11,8 @@ import Combine
 
 class RegisterViewController: UIViewController, CommonFormView {
     
+    private let buttonFactory: ButtonFactory
+    
     
     var loginLabel: UILabel = {
         let label = UILabel()
@@ -42,17 +44,8 @@ class RegisterViewController: UIViewController, CommonFormView {
         return textFiled
     }()
     
-    var actionButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Create account", for: .normal)
-        button.tintColor = .white
-        button.titleLabel?.font = .systemFont(ofSize: 16, weight: .bold)
-        button.backgroundColor = UIColor(red: 29/255, green: 161/255, blue: 242/255, alpha: 1)
-        button.layer.masksToBounds = true
-        button.layer.cornerRadius = 25
-        button.isEnabled = false
-        return button
+    lazy var actionButton: UIButton = {
+        return buttonFactory.createEnterButton(with: "Create account")
     }()
     
     
@@ -60,8 +53,9 @@ class RegisterViewController: UIViewController, CommonFormView {
     private var subscriptions: Set<AnyCancellable> = []
     
     
-    init(authenticationViewModel: AuthenticationViewModel) {
+    init(authenticationViewModel: AuthenticationViewModel, buttonFactory: ButtonFactory) {
         self.authenticationViewModel = authenticationViewModel
+        self.buttonFactory = buttonFactory
         super.init(nibName: nil, bundle: nil)
     }
     

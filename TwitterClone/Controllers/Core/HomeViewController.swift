@@ -8,6 +8,7 @@
 import UIKit
 import FirebaseAuth
 import Combine
+
 class HomeViewController: UIViewController {
 
     
@@ -20,6 +21,8 @@ class HomeViewController: UIViewController {
     private let authenticationViewModel: AuthenticationViewModel
     private let homeViewModel: HomeViewModel
     private var subscriptions: Set<AnyCancellable> = []
+    private let buttonFactory: ButtonFactory
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,9 +41,10 @@ class HomeViewController: UIViewController {
       
     }
     
-    init(authenticationViewModel: AuthenticationViewModel, homeViewModel: HomeViewModel) {
+    init(authenticationViewModel: AuthenticationViewModel, homeViewModel: HomeViewModel, buttonFactory: ButtonFactory) {
         self.authenticationViewModel = authenticationViewModel
         self.homeViewModel = homeViewModel
+        self.buttonFactory = buttonFactory
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -66,7 +70,7 @@ class HomeViewController: UIViewController {
     }
     
     func compliteUserOnboarding() {
-        let vc = ProfileDataFormViewController()
+        let vc = ProfileDataFormViewController(buttonFactory: buttonFactory)
         present(vc, animated: true)
     }
     
@@ -82,7 +86,7 @@ class HomeViewController: UIViewController {
     
     private func handleAuthentication() {
         if Auth.auth().currentUser == nil {
-            let vc = UINavigationController(rootViewController: OnboardingViewController(authenticationViewModel: authenticationViewModel))
+            let vc = UINavigationController(rootViewController: OnboardingViewController(authenticationViewModel: authenticationViewModel, buttonFactory: buttonFactory))
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: false)
         }

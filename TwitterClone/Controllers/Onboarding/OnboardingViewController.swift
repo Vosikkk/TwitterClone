@@ -56,7 +56,9 @@ class OnboardingViewController: UIViewController {
         return button
     }()
     
+    private let buttonFactory: ButtonFactory
     
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
@@ -75,8 +77,9 @@ class OnboardingViewController: UIViewController {
     
     private let authenticationViewModel: AuthenticationViewModel
     
-    init(authenticationViewModel: AuthenticationViewModel) {
+    init(authenticationViewModel: AuthenticationViewModel, buttonFactory: ButtonFactory) {
         self.authenticationViewModel = authenticationViewModel
+        self.buttonFactory = buttonFactory
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -86,12 +89,12 @@ class OnboardingViewController: UIViewController {
     
     
     @objc private func didTapLogin() {
-        let vc = LoginViewController(authenticationViewModel: authenticationViewModel)
+        let vc = LoginViewController(authenticationViewModel: authenticationViewModel, buttonFactory: buttonFactory)
         navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc private func didTapCreateAccount() {
-        let vc = RegisterViewController(authenticationViewModel: authenticationViewModel)
+        let vc = RegisterViewController(authenticationViewModel: authenticationViewModel, buttonFactory: buttonFactory)
         navigationController?.pushViewController(vc, animated: true)
     }
     

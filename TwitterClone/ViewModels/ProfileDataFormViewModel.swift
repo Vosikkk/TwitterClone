@@ -17,5 +17,4 @@ class ProfileDataFormViewModel: ObservableObject {
     @Published var avatarPath: String?
     
     
-    
 }

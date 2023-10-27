@@ -16,7 +16,6 @@ protocol DatabaseManager {
     var userPath: String { get set }
     func collectionUsers(add user: User) -> AnyPublisher<Bool, Error>
     func collectionUsers(retreive id: String) -> AnyPublisher<TwitterUser, Error>
-    
 }
 
 class StorageUserManager: DatabaseManager  {

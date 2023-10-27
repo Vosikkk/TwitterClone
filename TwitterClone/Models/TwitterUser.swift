@@ -24,8 +24,4 @@ struct TwitterUser: Codable {
     init(from user: User) {
         self.id = user.uid
     }
-    
-    
-    
-    
 }

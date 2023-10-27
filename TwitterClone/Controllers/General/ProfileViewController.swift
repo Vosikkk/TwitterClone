@@ -12,10 +12,6 @@ class ProfileViewController: UIViewController {
     private var isStatusBarHidden: Bool = true
     
     var profileAvatar = ProfileCustomUIView()
-        
-    private var avatarAnimationInProgress = false
-    private var avatarMaxScaled = false
-    private var headerMaxTransformed = false
     
     private let statusBar: UIView = {
         let view = UIView()
@@ -32,6 +28,9 @@ class ProfileViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
+    
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,7 +56,7 @@ class ProfileViewController: UIViewController {
                                      y: (profileTableView.tableHeaderView!.bounds.height - Constants.avatarHeight) / 2.8,
                                      width: Constants.avatarWidth,
                                      height: Constants.avatarHeight)
-       // updateParallaxOffset()
+       
     }
     
     private func updateParallaxOffset(_ offset: CGFloat) {
