@@ -16,7 +16,7 @@ class ProfileViewController: UIViewController {
     
     var profileAvatar = ProfileCustomUIView()
     
-    private let commonFactory: CommonFactory
+    private let commonFactory: GeneralFactory
     
     private let statusBar: UIView = {
         let view = UIView()
@@ -35,7 +35,7 @@ class ProfileViewController: UIViewController {
     }()
     
     
-    init(commonFactory: CommonFactory) {
+    init(commonFactory: GeneralFactory) {
         self.commonFactory = commonFactory
         super.init(nibName: nil, bundle: nil)
     }

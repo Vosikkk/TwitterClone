@@ -18,7 +18,7 @@ protocol DatabaseManager {
     func collectionUsers(retreive id: String) -> AnyPublisher<TwitterUser, Error>
 }
 
-class StorageUserManager: DatabaseManager  {
+final class StorageUserManager: DatabaseManager  {
     
     var db: Firestore = Firestore.firestore()
     

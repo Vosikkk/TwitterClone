@@ -18,7 +18,7 @@ class MainTabBarViewController: UITabBarController {
         let textFieldFactory = TextFieldFactory()
         let labelFactory = LabelFactory()
         
-        let commonFactory = CommonFactory(buttonFactory: buttonFactory,
+        let commonFactory = GeneralFactory(buttonFactory: buttonFactory,
                                           textFieldFactory: textFieldFactory,
                                           labelFactory: labelFactory)
         

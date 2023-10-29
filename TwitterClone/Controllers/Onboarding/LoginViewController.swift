@@ -15,19 +15,19 @@ class LoginViewController: UIViewController, CommonFormView {
     
     private var subscriptions: Set<AnyCancellable> = []
     private let authenticationViewModel: AuthenticationViewModel
-    private let commonFactory: CommonFactory
+    private let commonFactory: GeneralFactory
     
     lazy var actionButton: UIButton = {
-        return commonFactory.buttonFactory.createMainButton(with: TitleConstants.actionButtonTitle,
+        return commonFactory.buttonFactory.createMainFormButton(with: TitleConstants.actionButtonTitle,
                                                             fontSize: FontSizeConstants.actionButtonFontSize)
     }()
     
     lazy var emailTextFiled: UITextField = {
-        commonFactory.textFieldFactory.createTextField(with: TitleConstants.emailTextFiledPlaceholder)
+        commonFactory.textFieldFactory.createCommonTextField(with: TitleConstants.emailTextFiledPlaceholder)
     }()
     
     lazy var passwordTextField: UITextField = {
-        commonFactory.textFieldFactory.createTextField(with: TitleConstants.passwordTextFieldPlaceholder)
+        commonFactory.textFieldFactory.createCommonTextField(with: TitleConstants.passwordTextFieldPlaceholder)
     }()
     
     var loginLabel: UILabel = {
@@ -41,7 +41,7 @@ class LoginViewController: UIViewController, CommonFormView {
     
     // MARK: - Init
     
-    init(authenticationViewModel: AuthenticationViewModel, commonFactory: CommonFactory) {
+    init(authenticationViewModel: AuthenticationViewModel, commonFactory: GeneralFactory) {
         self.authenticationViewModel = authenticationViewModel
         self.commonFactory = commonFactory
         super.init(nibName: nil, bundle: nil)

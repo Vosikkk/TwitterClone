@@ -11,34 +11,32 @@ class OnboardingViewController: UIViewController {
 
    // MARK: - Properties
     
-    private let commonFactory: CommonFactory
+    private let commonFactory: GeneralFactory
     
     private let authenticationViewModel: AuthenticationViewModel
     
     lazy var createAccountButton: UIButton = {
-        return commonFactory.buttonFactory.createMainButton(with: TitleConstants.createAccountButtonTitle,
-                                                            fontSize: FontConstants.createAccountButtonFontSize)
+        return commonFactory.buttonFactory.createMainFormButton(
+            with: TitleConstants.createAccountButtonTitle,
+            fontSize: FontConstants.createAccountButtonFontSize)
     }()
     
-    private let welcomeLabel: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 0
-        label.text = TitleConstants.welcomeLabelTitle
-        label.font = .systemFont(ofSize: 32, weight: .heavy)
-        label.translatesAutoresizingMaskIntoConstraints = false
+    private lazy var welcomeLabel: UILabel = {
+        let label = commonFactory.labelFactory.createLabel(
+            with: TitleConstants.welcomeLabelTitle,
+            textStyle: .label,
+            fontSize: .systemFont(ofSize: FontConstants.welcomeLabelFontSize, weight: .heavy))
         label.textAlignment = .center
-        label.textColor = .label
+        label.numberOfLines = 0
         return label
     }()
     
-   
-    
-    private let promptLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.tintColor = .gray
-        label.text = TitleConstants.promptLabelTitle
-        label.font = .systemFont(ofSize: 14, weight: .regular)
+    private lazy var promptLabel: UILabel = {
+        let label = commonFactory.labelFactory.createLabel(
+            with: TitleConstants.promptLabelTitle,
+            textStyle: .secondaryLabel,
+            fontSize: .systemFont(ofSize: FontConstants.promptLabelFontSize, weight: .regular))
+        label.textColor = .gray
         return label
     }()
     
@@ -74,7 +72,7 @@ class OnboardingViewController: UIViewController {
    
     // MARK: - Init
     
-    init(authenticationViewModel: AuthenticationViewModel, commonFactory: CommonFactory) {
+    init(authenticationViewModel: AuthenticationViewModel, commonFactory: GeneralFactory) {
         self.authenticationViewModel = authenticationViewModel
         self.commonFactory = commonFactory
         super.init(nibName: nil, bundle: nil)
@@ -92,15 +90,18 @@ class OnboardingViewController: UIViewController {
     // MARK: - @objc Methods
     
     @objc private func didTapLogin() {
-        let vc = LoginViewController(authenticationViewModel: authenticationViewModel,
-                                     commonFactory: commonFactory)
+        let vc = LoginViewController(
+            authenticationViewModel: authenticationViewModel,
+            commonFactory: commonFactory)
         
         navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc private func didTapCreateAccount() {
-        let vc = RegisterViewController(authenticationViewModel: authenticationViewModel, 
-                                        commonFactory: commonFactory)
+        let vc = RegisterViewController(
+            authenticationViewModel: authenticationViewModel,
+            commonFactory: commonFactory)
+        
         navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -111,16 +112,19 @@ class OnboardingViewController: UIViewController {
     private func configureConstraints() {
         let welcomeLabelConstraints = [
             welcomeLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: LayoutConstants.welcomeLabelOffset),
-            welcomeLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: LayoutConstants.negativeWelcomeLabelOffset),
+            welcomeLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: LayoutConstants.welcomeLabelTrailingOffset),
             welcomeLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ]
         
         let createAccountButtonConstraints = [
             createAccountButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            createAccountButton.topAnchor.constraint(equalTo: welcomeLabel.bottomAnchor, 
-                                                     constant: LayoutConstants.createAccountButtonOffset),
-            createAccountButton.widthAnchor.constraint(equalTo: welcomeLabel.widthAnchor,
-                                                       constant: LayoutConstants.negativeCreateAccountButtonOffset),
+           
+            createAccountButton.topAnchor.constraint(
+                equalTo: welcomeLabel.bottomAnchor, constant: LayoutConstants.createAccountButtonTopOffset),
+            
+            createAccountButton.widthAnchor.constraint(
+                equalTo: welcomeLabel.widthAnchor, constant: LayoutConstants.createAccountButtonWidthOffset),
+            
             createAccountButton.heightAnchor.constraint(equalToConstant: SizeConstants.createAccountButtonHeight)
         ]
         
@@ -143,9 +147,9 @@ class OnboardingViewController: UIViewController {
     
     private struct LayoutConstants {
         static let welcomeLabelOffset: CGFloat = 20
-        static let negativeWelcomeLabelOffset: CGFloat = -20
-        static let createAccountButtonOffset: CGFloat = 20
-        static let negativeCreateAccountButtonOffset: CGFloat = -20
+        static let welcomeLabelTrailingOffset: CGFloat = -20
+        static let createAccountButtonTopOffset: CGFloat = 20
+        static let createAccountButtonWidthOffset: CGFloat = -20
         static let promptLabelOffset: CGFloat = 20
         static let negativePromptLabelOffset: CGFloat = -60
         static let loginButtonOffset: CGFloat = 10
@@ -158,6 +162,8 @@ class OnboardingViewController: UIViewController {
     private struct FontConstants {
         static let createAccountButtonFontSize: CGFloat = 24
         static let promptLabelFontSize: CGFloat = 14
+        static let welcomeLabelFontSize: CGFloat = 32
+       
     }
     
     private struct TitleConstants {

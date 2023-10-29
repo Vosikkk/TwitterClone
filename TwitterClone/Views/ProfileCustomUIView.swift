@@ -19,9 +19,9 @@ class ProfileCustomUIView: UIView {
     }
     
     override func layoutSubviews() {
-           super.layoutSubviews()
-           configureState()
-       }
+        super.layoutSubviews()
+        configureState()
+    }
     
     private func configureState() {
            backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0)

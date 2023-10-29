@@ -14,22 +14,22 @@ class RegisterViewController: UIViewController, CommonFormView {
     
     // MARK: - Properties
     
-    private let commonFactory: CommonFactory
+    private let commonFactory: GeneralFactory
     
     private var authenticationViewModel: AuthenticationViewModel
     
     private var subscriptions: Set<AnyCancellable> = []
     
     lazy var passwordTextField: UITextField = {
-        return commonFactory.textFieldFactory.createTextField(with: TitleConstants.passwordTextFieldPlaceholder)
+        return commonFactory.textFieldFactory.createCommonTextField(with: TitleConstants.passwordTextFieldPlaceholder)
     }()
     
     lazy var emailTextFiled: UITextField = {
-        return commonFactory.textFieldFactory.createTextField(with: TitleConstants.emailTextFiledPlaceholder)
+        return commonFactory.textFieldFactory.createCommonTextField(with: TitleConstants.emailTextFiledPlaceholder)
     }()
     
     lazy var actionButton: UIButton = {
-        return commonFactory.buttonFactory.createMainButton(with: TitleConstants.actionButtonTitle, 
+        return commonFactory.buttonFactory.createMainFormButton(with: TitleConstants.actionButtonTitle, 
                                                             fontSize: FontSizeConstants.actionButtonFontSize)
     }()
     
@@ -44,7 +44,7 @@ class RegisterViewController: UIViewController, CommonFormView {
     
     // MARK: - Init
     
-    init(authenticationViewModel: AuthenticationViewModel, commonFactory: CommonFactory) {
+    init(authenticationViewModel: AuthenticationViewModel, commonFactory: GeneralFactory) {
         self.authenticationViewModel = authenticationViewModel
         self.commonFactory = commonFactory
         super.init(nibName: nil, bundle: nil)
@@ -69,17 +69,13 @@ class RegisterViewController: UIViewController, CommonFormView {
         configureConstraints(in: view)
         
         actionButton.addTarget(self, action: #selector(didTapRegister), for: .touchUpInside)
-        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapToDismiss)))
+        view.addGestureRecognizer()
        
         bindViews()
     }
     
     
     // MARK: - @objc Methods
-    
-    @objc private func didTapToDismiss() {
-         view.endEditing(true)
-    }
     
     @objc private func didTapRegister() {
         authenticationViewModel.createUser()

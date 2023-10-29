@@ -9,31 +9,10 @@ import UIKit
 
 class ProfileTableViewHeader: UIView {
     
-    private let commonFactory: CommonFactory
     
-    private enum SectionTabs: String {
-        case posts = "Posts"
-        case replies = "Replies"
-        case highlights = "HighLights"
-        case media = "Media"
-        case likes = "Likes"
-        
-        var index : Int {
-            switch self {
-            case .posts:
-                return 0
-            case .replies:
-                return 1
-            case .highlights:
-                return 2
-            case .media:
-                return 3
-            case .likes:
-                return 4
-            }
-        }
-    }
+    // MARK: - Properties
     
+    private let commonFactory: GeneralFactory
     private var leadingAnchors: [NSLayoutConstraint] = []
     private var trailingAnchors: [NSLayoutConstraint] = []
     
@@ -63,7 +42,7 @@ class ProfileTableViewHeader: UIView {
         for title in titles {
             let button = UIButton(type: .system)
             button.setTitle(title, for: .normal)
-            button.titleLabel?.font = .systemFont(ofSize: 16, weight: .bold)
+            button.titleLabel?.font = .systemFont(ofSize: FontSizeConstants.tabsFontSize, weight: .bold)
             button.translatesAutoresizingMaskIntoConstraints = false
             buttons.append(button)
         }
@@ -82,7 +61,7 @@ class ProfileTableViewHeader: UIView {
     private lazy var displayNameLabel: UILabel = {
         return commonFactory.labelFactory.createLabel(
             with: "Sasha",
-            textColor: .label,
+            textStyle: .label,
             fontSize: .systemFont(ofSize: FontSizeConstants.displayNameLabelFontSize, 
                                   weight: FontWeightConstants.displayNameLabelWeight))
     }()
@@ -90,7 +69,7 @@ class ProfileTableViewHeader: UIView {
     private lazy var userNameLabel: UILabel = {
         return commonFactory.labelFactory.createLabel(
             with: "@vosikk",
-            textColor: .secondaryLabel,
+            textStyle: .secondaryLabel,
             fontSize: .systemFont(ofSize: FontSizeConstants.userNameLabelFontSize, 
                                   weight: FontWeightConstants.userNameLabelWeight))
     }()
@@ -98,7 +77,7 @@ class ProfileTableViewHeader: UIView {
     private lazy var followersTextLabel: UILabel = {
         return commonFactory.labelFactory.createLabel(
             with: "Followers",
-            textColor: .secondaryLabel,
+            textStyle: .secondaryLabel,
             fontSize: .systemFont(ofSize: FontSizeConstants.followersTextLabelFontSize, 
                                   weight: FontWeightConstants.followersTextLabelWeight))
     }()
@@ -106,7 +85,7 @@ class ProfileTableViewHeader: UIView {
     private lazy var followersCountLabel: UILabel = {
         return commonFactory.labelFactory.createLabel(
             with: "2M",
-            textColor: .label,
+            textStyle: .label,
             fontSize: .systemFont(ofSize: FontSizeConstants.followersCountLabelFontSize, 
                                   weight: FontWeightConstants.followersCountLabelWeight))
     }()
@@ -114,7 +93,7 @@ class ProfileTableViewHeader: UIView {
     private lazy var followingTextLabel: UILabel = {
         return commonFactory.labelFactory.createLabel(
             with: "Following",
-            textColor: .secondaryLabel,
+            textStyle: .secondaryLabel,
             fontSize: .systemFont(ofSize: FontSizeConstants.followingTextLabelFontSize, 
                                   weight: FontWeightConstants.followingTextLabelWeight))
     }()
@@ -122,7 +101,7 @@ class ProfileTableViewHeader: UIView {
     private lazy var followingCountLabel: UILabel = {
         return commonFactory.labelFactory.createLabel(
             with: "215",
-            textColor: .label,
+            textStyle: .label,
             fontSize: .systemFont(ofSize: FontSizeConstants.followingCountLabelFontSize, 
                                   weight: FontWeightConstants.followingCountLabelWeight))
     }()
@@ -131,11 +110,16 @@ class ProfileTableViewHeader: UIView {
     private lazy var joinedDateLabel: UILabel = {
         return commonFactory.labelFactory.createLabel(
             with: "Joined May 2021",
-            textColor: .secondaryLabel,
+            textStyle: .secondaryLabel,
             fontSize: .systemFont(ofSize: FontSizeConstants.joinedDateLabelFontSize, 
                                   weight: FontWeightConstants.joinedDateLabelWeight))
     }()
     
+    private lazy var userBioLabel: UILabel = {
+        let label = commonFactory.labelFactory.createLabel(with: "iOS developer", textStyle: .label, fontSize: .systemFont(ofSize: 14))
+        label.numberOfLines = 3
+        return label
+    }()
     
     private let joinDateImageView: UIImageView = {
         let imageView = UIImageView()
@@ -144,18 +128,7 @@ class ProfileTableViewHeader: UIView {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
-    
-    
-    private let userBioLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.numberOfLines = 3
-        label.text = "iOS developer"
-        label.textColor = .label
-        return label
-    }()
-
-    
+        
     private let profileHeaderImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -165,7 +138,10 @@ class ProfileTableViewHeader: UIView {
         return imageView
     }()
     
-    init(frame: CGRect, commonFactory: CommonFactory) {
+    
+    // MARK: - Init
+    
+    init(frame: CGRect, commonFactory: GeneralFactory) {
         self.commonFactory = commonFactory
         super.init(frame: frame)
         addSubview(profileHeaderImageView)
@@ -188,17 +164,15 @@ class ProfileTableViewHeader: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    
+    // MARK: - Layout
+    
     override func layoutSubviews() {
         super.layoutSubviews()
     }
     
-    private func configureStackButtons() {
-        for (i, button) in tabs.enumerated() {
-            button.addTarget(self, action: #selector(didTapTab), for: .touchUpInside)
-            button.tintColor = i == selectedTab ? .label : .secondaryLabel
-        }
-    }
-    
+    // MARK: - @objc Method
+   
     @objc private func didTapTab(_ sender: UIButton) {
         guard let label = sender.titleLabel?.text else { return }
         switch label {
@@ -217,6 +191,14 @@ class ProfileTableViewHeader: UIView {
         }
     }
     
+    // MARK: - Func
+    
+    private func configureStackButtons() {
+        for (i, button) in tabs.enumerated() {
+            button.addTarget(self, action: #selector(didTapTab), for: .touchUpInside)
+            button.tintColor = i == selectedTab ? .label : .secondaryLabel
+        }
+    }
     
     private func configureConstraints() {
         
@@ -226,62 +208,67 @@ class ProfileTableViewHeader: UIView {
             profileHeaderImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
             profileHeaderImageView.topAnchor.constraint(equalTo: topAnchor),
             profileHeaderImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            profileHeaderImageView.heightAnchor.constraint(equalToConstant: 150)
+            profileHeaderImageView.heightAnchor.constraint(equalToConstant: SizeConstants.profileHeaderImageViewHeight)
         ]
         let displayNameLabelConstraints = [
-            displayNameLabel.leadingAnchor.constraint(equalTo: profileHeaderImageView.leadingAnchor, constant: 10),
-            displayNameLabel.topAnchor.constraint(equalTo: profileHeaderImageView.bottomAnchor, constant: 60)
+            displayNameLabel.leadingAnchor.constraint(
+                equalTo: profileHeaderImageView.leadingAnchor, constant: LayoutConstants.displayNameLabelLeadingOffset),
+            displayNameLabel.topAnchor.constraint(equalTo: profileHeaderImageView.bottomAnchor, constant: LayoutConstants.displayNameLabelTopOffset)
         ]
         let userNameLabelConstraints = [
             userNameLabel.leadingAnchor.constraint(equalTo: displayNameLabel.leadingAnchor),
-            userNameLabel.topAnchor.constraint(equalTo: displayNameLabel.bottomAnchor, constant: 5)
+            userNameLabel.topAnchor.constraint(equalTo: displayNameLabel.bottomAnchor, constant: LayoutConstants.userNameLabelTopOffset)
         ]
         let userBioLabelConstraints = [
             userBioLabel.leadingAnchor.constraint(equalTo: displayNameLabel.leadingAnchor),
            // userBioLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5),
-            userBioLabel.topAnchor.constraint(equalTo: userNameLabel.bottomAnchor, constant: 20)
+            userBioLabel.topAnchor.constraint(equalTo: userNameLabel.bottomAnchor, constant: LayoutConstants.userBioLabelTopOffset)
         ]
         let joinDateImageViewConstraints = [
             joinDateImageView.leadingAnchor.constraint(equalTo: displayNameLabel.leadingAnchor),
-            joinDateImageView.topAnchor.constraint(equalTo: userBioLabel.bottomAnchor, constant: 10)
+            joinDateImageView.topAnchor.constraint(equalTo: userBioLabel.bottomAnchor, constant: LayoutConstants.joinDateImageViewTopOffset)
         ]
         let joinedDateLabelConstraints = [
-            joinedDateLabel.leadingAnchor.constraint(equalTo: joinDateImageView.trailingAnchor, constant: 2),
+            joinedDateLabel.leadingAnchor.constraint(
+                equalTo: joinDateImageView.trailingAnchor, constant: LayoutConstants.joinedDateLabelLeadingOffset),
             joinedDateLabel.bottomAnchor.constraint(equalTo: joinDateImageView.bottomAnchor)
         ]
         
         let followingCountLabelConstraints = [
             followingCountLabel.leadingAnchor.constraint(equalTo: displayNameLabel.leadingAnchor),
-            followingCountLabel.topAnchor.constraint(equalTo: joinedDateLabel.bottomAnchor, constant: 15)
+            followingCountLabel.topAnchor.constraint(equalTo: joinedDateLabel.bottomAnchor, constant: LayoutConstants.followingCountLabelTopOffset)
         ]
                 
         let followingTextLabelConstraints = [
-            followingTextLabel.leadingAnchor.constraint(equalTo: followingCountLabel.trailingAnchor, constant: 6),
+            followingTextLabel.leadingAnchor.constraint(
+                equalTo: followingCountLabel.trailingAnchor, constant: LayoutConstants.followingTextLabelLeadingOffset),
             followingTextLabel.bottomAnchor.constraint(equalTo: followingCountLabel.bottomAnchor)
         ]
                 
         let followersCountLabelConstraints = [
-            followersCountLabel.leadingAnchor.constraint(equalTo: followingTextLabel.trailingAnchor, constant: 6),
+            followersCountLabel.leadingAnchor.constraint(
+                equalTo: followingTextLabel.trailingAnchor, constant: LayoutConstants.followersCountLabelLeadingOffset),
             followersCountLabel.bottomAnchor.constraint(equalTo: followingCountLabel.bottomAnchor)
         ]
                 
         let followersTextLabelConstraints = [
-            followersTextLabel.leadingAnchor.constraint(equalTo: followersCountLabel.trailingAnchor, constant: 6),
+            followersTextLabel.leadingAnchor.constraint(
+                equalTo: followersCountLabel.trailingAnchor, constant: LayoutConstants.followersTextLabelLeadingOffset),
             followersTextLabel.bottomAnchor.constraint(equalTo: followingCountLabel.bottomAnchor)
         ]
         
         let sectionStackConstraints = [
-            sectionStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 17),
-            sectionStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -17),
-            sectionStack.topAnchor.constraint(equalTo: followingCountLabel.bottomAnchor, constant: 13),
-            sectionStack.heightAnchor.constraint(equalToConstant: 35)
+            sectionStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: LayoutConstants.sectionStackLeadingOffset),
+            sectionStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: LayoutConstants.sectionStackTrailinigOffset),
+            sectionStack.topAnchor.constraint(equalTo: followingCountLabel.bottomAnchor, constant: LayoutConstants.sectionStackTopOffset),
+            sectionStack.heightAnchor.constraint(equalToConstant: SizeConstants.sectionStackHeight)
         ]
         
         let indicatorsConstraints = [
             leadingAnchors[0],
             trailingAnchors[0],
             indicators.topAnchor.constraint(equalTo: sectionStack.arrangedSubviews[0].bottomAnchor),
-            indicators.heightAnchor.constraint(equalToConstant: 4)
+            indicators.heightAnchor.constraint(equalToConstant: SizeConstants.indicatorsHeight)
         ]
 
         NSLayoutConstraint.activate(indicatorsConstraints)
@@ -307,6 +294,31 @@ class ProfileTableViewHeader: UIView {
         }
     }
     
+    // MARK: - Nested Types
+    
+    private enum SectionTabs: String {
+        case posts = "Posts"
+        case replies = "Replies"
+        case highlights = "HighLights"
+        case media = "Media"
+        case likes = "Likes"
+        
+        var index : Int {
+            switch self {
+            case .posts:
+                return 0
+            case .replies:
+                return 1
+            case .highlights:
+                return 2
+            case .media:
+                return 3
+            case .likes:
+                return 4
+            }
+        }
+    }
+    
     private struct FontSizeConstants {
         static let displayNameLabelFontSize: CGFloat = 22
         static let userNameLabelFontSize: CGFloat = 18
@@ -315,6 +327,7 @@ class ProfileTableViewHeader: UIView {
         static let followingTextLabelFontSize: CGFloat = 14
         static let followingCountLabelFontSize: CGFloat = 14
         static let joinedDateLabelFontSize: CGFloat = 14
+        static let tabsFontSize: CGFloat = 16
     }
     private struct FontWeightConstants {
         static let displayNameLabelWeight: UIFont.Weight = .bold
@@ -324,6 +337,26 @@ class ProfileTableViewHeader: UIView {
         static let followingTextLabelWeight: UIFont.Weight = .regular
         static let followingCountLabelWeight: UIFont.Weight = .bold
         static let joinedDateLabelWeight: UIFont.Weight = .regular
+    }
+    private struct LayoutConstants {
+        static let displayNameLabelLeadingOffset: CGFloat = 10
+        static let displayNameLabelTopOffset: CGFloat = 60
+        static let userNameLabelTopOffset: CGFloat = 5
+        static let userBioLabelTopOffset: CGFloat = 20
+        static let joinDateImageViewTopOffset: CGFloat = 10
+        static let joinedDateLabelLeadingOffset: CGFloat = 2
+        static let followingCountLabelTopOffset: CGFloat = 15
+        static let followingTextLabelLeadingOffset: CGFloat = 6
+        static let followersCountLabelLeadingOffset: CGFloat = 6
+        static let followersTextLabelLeadingOffset: CGFloat = 6
+        static let sectionStackLeadingOffset: CGFloat = 17
+        static let sectionStackTrailinigOffset: CGFloat = -17
+        static let sectionStackTopOffset: CGFloat = 13
+    }
+    private struct SizeConstants {
+        static let profileHeaderImageViewHeight: CGFloat = 150
+        static let sectionStackHeight: CGFloat = 35
+        static let indicatorsHeight: CGFloat = 4
     }
 }
 

@@ -1,5 +1,5 @@
 //
-//  CommonFactory.swift
+//  GeneralFactory.swift
 //  TwitterClone
 //
 //  Created by Саша Восколович on 27.10.2023.
@@ -7,14 +7,15 @@
 
 import Foundation
 
-protocol CommonFactoryProtocol {
+protocol GeneralFactoryProtocol {
     var buttonFactory: ButtonFactoryProtocol { get set }
     var textFieldFactory: TextFieldFactory { get set }
     var labelFactory: LabelFactoryProtocol { get set }
 }
 
 
-final class CommonFactory: CommonFactoryProtocol {
+
+final class GeneralFactory: GeneralFactoryProtocol {
     
     var labelFactory: LabelFactoryProtocol
     

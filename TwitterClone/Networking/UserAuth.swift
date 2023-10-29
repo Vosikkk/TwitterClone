@@ -11,20 +11,19 @@ import FirebaseAuthCombineSwift
 import Combine
 
 protocol AuthManager {
-    func registerUser(with email: String, password: String) -> AnyPublisher<User, Error>
-    func loginUser(with email: String, password: String) -> AnyPublisher<User, Error>
+    func register(with email: String, password: String) -> AnyPublisher<User, Error>
+    func login(with email: String, password: String) -> AnyPublisher<User, Error>
 }
 
-class UserAuth: AuthManager {
+final class UserAuth: AuthManager {
     
-    func loginUser(with email: String, password: String) -> AnyPublisher<User, Error> {
+    func login(with email: String, password: String) -> AnyPublisher<User, Error> {
         return Auth.auth().signIn(withEmail: email, password: password)
             .map(\.user)
             .eraseToAnyPublisher()
     }
     
-    
-    func registerUser(with email: String, password: String) -> AnyPublisher<User, Error> {
+    func register(with email: String, password: String) -> AnyPublisher<User, Error> {
       return Auth.auth().createUser(withEmail: email, password: password)
             .map(\.user)
             .eraseToAnyPublisher()

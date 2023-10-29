@@ -41,7 +41,7 @@ final class AuthenticationViewModel: ObservableObject {
         guard let email = email,
               let password = password else { return }
         
-        userAuth.registerUser(with: email, password: password)
+        userAuth.register(with: email, password: password)
             .handleEvents(receiveOutput: { [weak self] user in
                 self?.user = user
             })
@@ -72,7 +72,7 @@ final class AuthenticationViewModel: ObservableObject {
         guard let email = email,
               let password = password else { return }
         
-        userAuth.loginUser(with: email, password: password)
+        userAuth.login(with: email, password: password)
             .sink { [weak self] completion in
                 if case .failure(let error) = completion {
                     self?.error = error.localizedDescription

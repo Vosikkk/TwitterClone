@@ -12,13 +12,24 @@ struct ColorConstants {
     static let colorView = UIColor(red: 29/255, green: 161/255, blue: 242/255, alpha: 1)
 }
 
+
 protocol ButtonFactoryProtocol {
-    func createMainButton(with name: String, fontSize: CGFloat) -> UIButton
+    func createMainFormButton(with name: String, fontSize: CGFloat) -> UIButton
+    func createProfileViewCellButton(of image: UIImage) -> UIButton
 }
 
 final class ButtonFactory: ButtonFactoryProtocol {
     
-    func createMainButton(with name: String, fontSize: CGFloat) -> UIButton {
+    func createProfileViewCellButton(of image: UIImage) -> UIButton {
+        let button = UIButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(image, for: .normal)
+        button.tintColor = .systemGray2
+        return button
+    }
+    
+    
+    func createMainFormButton(with name: String, fontSize: CGFloat) -> UIButton {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle(name, for: .normal)

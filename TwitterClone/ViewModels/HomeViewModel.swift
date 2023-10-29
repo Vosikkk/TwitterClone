@@ -9,7 +9,7 @@ import Foundation
 import Combine
 import FirebaseAuth
 
-class HomeViewModel: ObservableObject {
+final class HomeViewModel: ObservableObject {
     
     @Published var user: TwitterUser?
     @Published var error: String?

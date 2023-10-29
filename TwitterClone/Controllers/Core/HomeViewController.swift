@@ -26,13 +26,13 @@ class HomeViewController: UIViewController {
     
     private var subscriptions: Set<AnyCancellable> = []
     
-    private let commonFactory: CommonFactory
+    private let commonFactory: GeneralFactory
     
     
     
     // MARK: - Init
     
-    init(authenticationViewModel: AuthenticationViewModel, homeViewModel: HomeViewModel, commonFactory: CommonFactory) {
+    init(authenticationViewModel: AuthenticationViewModel, homeViewModel: HomeViewModel, commonFactory: GeneralFactory) {
         self.authenticationViewModel = authenticationViewModel
         self.homeViewModel = homeViewModel
         self.commonFactory = commonFactory
