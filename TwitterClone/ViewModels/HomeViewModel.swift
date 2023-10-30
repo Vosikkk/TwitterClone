@@ -16,11 +16,11 @@ final class HomeViewModel: ObservableObject {
     
     private var subscriptions: Set<AnyCancellable> = []
     
-    private let storageUserManager: DatabaseManager
+    private let userDatabaseManager: DatabaseManager
     
     
     init(userDatabaseManager: DatabaseManager) {
-        self.storageUserManager = userDatabaseManager
+        self.userDatabaseManager = userDatabaseManager
     }
     
     
@@ -28,7 +28,7 @@ final class HomeViewModel: ObservableObject {
         
         guard let id = Auth.auth().currentUser?.uid else { return }
         
-        storageUserManager.collectionUsers(retreive: id)
+        userDatabaseManager.collectionUsers(retreive: id)
             .sink { [weak self] completion in
                 if case .failure(let error) = completion {
                     self?.error = error.localizedDescription

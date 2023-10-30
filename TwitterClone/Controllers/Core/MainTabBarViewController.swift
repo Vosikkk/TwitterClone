@@ -25,12 +25,13 @@ class MainTabBarViewController: UITabBarController {
                                           textFieldFactory: textFieldFactory,
                                           labelFactory: labelFactory)
        
+       
         let userStorageManager: StorageManager = UserStorageManager()
         let userAuth: AuthManager = UserAuth()
         let userDatabaseManager: DatabaseManager = UserDatabaseManager()
-        let homeViewModel = HomeViewModel(userDatabaseManager: userDatabaseManager)
-       
         
+        
+        let homeViewModel = HomeViewModel(userDatabaseManager: userDatabaseManager)
         let profileViewModel = ProfileDataFormViewModel(userStorageManager: userStorageManager)
         let authenticationViewModel = AuthenticationViewModel(userAuth: userAuth, userDatabaseManager: userDatabaseManager)
         

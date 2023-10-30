@@ -119,7 +119,7 @@ class ProfileDataFormViewController: UIViewController {
         
        
         avatarPlaceholderImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapToUpload)))
-       
+        submitButton.addTarget(self, action: #selector(didTapSubmit), for: .touchUpInside)
         configureConstraints()
         bundViews()
     }
@@ -132,6 +132,11 @@ class ProfileDataFormViewController: UIViewController {
         picker.delegate = self
         present(picker, animated: true)
     }
+    
+    @objc private func didTapSubmit() {
+        profileViewModel.uploadAvatar()
+    }
+    
     
     @objc private func didUpdateDisplayName() {
         profileViewModel.displayName = dispalyNameTextField.text
@@ -306,7 +311,7 @@ extension ProfileDataFormViewController: PHPickerViewControllerDelegate {
                 if let image = object as? UIImage {
                     DispatchQueue.main.async {
                         self?.avatarPlaceholderImageView.image = image
-                        self?.profileViewModel.imageData = image.jpegData(compressionQuality: 1)
+                        self?.profileViewModel.imageData = image.jpegData(compressionQuality: 0.5)
                         self?.profileViewModel.validateUserProfileForm()
                     }
                 }
