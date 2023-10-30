@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 import FirebaseStorage
-
+import Firebase
 
 final class ProfileDataFormViewModel: ObservableObject {
     
@@ -19,15 +19,18 @@ final class ProfileDataFormViewModel: ObservableObject {
     @Published var imageData: Data?
     @Published var isFormValid: Bool = false
     @Published var error: String = ""
-    @Published var url: URL?
+    @Published var isOnboardingFinished: Bool = false
     
     private var subscriptions: Set<AnyCancellable> = []
     
     
     private let userStorageManager: StorageManager
+    private let databaseManager: DatabaseManager
     
-    init(userStorageManager: StorageManager) {
+    
+    init(userStorageManager: StorageManager, databaseManager: DatabaseManager) {
         self.userStorageManager = userStorageManager
+        self.databaseManager = databaseManager
     }
     
     
@@ -55,12 +58,56 @@ final class ProfileDataFormViewModel: ObservableObject {
                 self.userStorageManager.getDownloadURL(for: metaData.path)
             })
             .sink { [weak self] completion in
-                if case .failure(let error) = completion {
+                
+                switch completion {
+                case .failure(let error):
+                    print(error.localizedDescription)
                     self?.error = error.localizedDescription
+                case .finished:
+                    self?.updateUserData()
                 }
             } receiveValue: { [weak self] url in
-                self?.url = url
+                
+                self?.avatarPath = url.absoluteString
             }
             .store(in: &subscriptions)
+    }
+    
+    private func updateUserData() {
+        guard let displayName,
+              let username,
+              let bio,
+              let avatarPath,
+              let id = Auth.auth().currentUser?.uid else { return }
+        
+        let updatedFields: [String: Any] = [
+            "displayName": displayName,
+            "username": username,
+            "bio": bio,
+            "avatarPath": avatarPath,
+            "isUserOnboarded": true
+        ]
+        databaseManager.collecttionUsers(updateFields: updatedFields, for: id)
+            .sink { [weak self] completion in
+                
+                if case .failure(let error) = completion {
+                    print(error.localizedDescription)
+                    self?.error = error.localizedDescription
+                }
+            } receiveValue: { [weak self] updated in
+                
+                self?.isOnboardingFinished = updated
+           
+            }.store(in: &subscriptions)
+    }
+    
+    func clearData() {
+        subscriptions.forEach { $0.cancel() }
+        username = nil
+        bio = nil
+        avatarPath = nil
+        imageData = nil
+        isFormValid = false
+        isOnboardingFinished = false
     }
 }

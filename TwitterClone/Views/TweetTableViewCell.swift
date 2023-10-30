@@ -8,7 +8,7 @@
 import UIKit
 
 protocol TweetTableViewCellDelegate: AnyObject {
-    func tweetTableViewCellDidTapReply()
+    func tweetTableViewCellDidTapReply(what cell: TweetTableViewCell)
     func tweetTableViewCellDidTapRetweet()
     func tweetTableViewCellDidTapLike()
     func tweetTableViewCellDidTapShare()
@@ -126,7 +126,7 @@ class TweetTableViewCell: UITableViewCell {
     // MARK: - @objc Methods
     
     @objc private func didTapReply() {
-        delegate?.tweetTableViewCellDidTapReply()
+        delegate?.tweetTableViewCellDidTapReply(what: self)
     }
     @objc private func didTapRetweet() {
         delegate?.tweetTableViewCellDidTapRetweet()

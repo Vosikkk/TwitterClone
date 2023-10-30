@@ -137,6 +137,11 @@ class ProfileDataFormViewController: UIViewController {
         profileViewModel.uploadAvatar()
     }
     
+    deinit {
+        profileViewModel.error = ""
+        print("ProfileDataFormViewController деініціалізований")
+    }
+    
     
     @objc private func didUpdateDisplayName() {
         profileViewModel.displayName = dispalyNameTextField.text
@@ -154,7 +159,15 @@ class ProfileDataFormViewController: UIViewController {
         userNameTextField.addTarget(self, action: #selector(didUpadateUserName), for: .editingChanged)
         profileViewModel.$isFormValid.sink { [weak self] buttonState in
             self?.submitButton.isEnabled = buttonState
-        }.store(in: &subscriptions)
+        }
+        .store(in: &subscriptions)
+        
+        profileViewModel.$isOnboardingFinished.sink { [weak self] success in
+            if success {
+                self?.dismiss(animated: true)
+            }
+        }
+        .store(in: &subscriptions)
     }
     
     
@@ -276,6 +289,7 @@ extension ProfileDataFormViewController: UITextViewDelegate {
     
     func textViewDidChange(_ textView: UITextView) {
         profileViewModel.bio = textView.text
+        profileViewModel.validateUserProfileForm()
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {

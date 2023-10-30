@@ -145,6 +145,7 @@ class HomeViewController: UIViewController {
         try? Auth.auth().signOut()
         handleAuthentication()
         authenticationViewModel.clearData()
+        profileViewModel.clearData()
     }
     
     
@@ -188,8 +189,8 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
 // MARK: - TweetTableViewCellDelegate
 
 extension HomeViewController: TweetTableViewCellDelegate {
-    func tweetTableViewCellDidTapReply() {
-        print("It's reply")
+    func tweetTableViewCellDidTapReply(what cell: TweetTableViewCell) {
+        print("It's reply + \(cell)")
     }
     
     func tweetTableViewCellDidTapRetweet() {

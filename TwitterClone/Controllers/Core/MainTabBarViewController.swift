@@ -32,7 +32,7 @@ class MainTabBarViewController: UITabBarController {
         
         
         let homeViewModel = HomeViewModel(userDatabaseManager: userDatabaseManager)
-        let profileViewModel = ProfileDataFormViewModel(userStorageManager: userStorageManager)
+        let profileViewModel = ProfileDataFormViewModel(userStorageManager: userStorageManager, databaseManager: userDatabaseManager)
         let authenticationViewModel = AuthenticationViewModel(userAuth: userAuth, userDatabaseManager: userDatabaseManager)
         
         
