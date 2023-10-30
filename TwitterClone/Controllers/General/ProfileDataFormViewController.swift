@@ -7,12 +7,17 @@
 
 import UIKit
 import PhotosUI
+import Combine
 
 class ProfileDataFormViewController: UIViewController {
 
     // MARK: - Properties
     
     private let commonFactory: GeneralFactory
+    
+    private let profileViewModel: ProfileDataFormViewModel
+    
+    private var subscriptions: Set<AnyCancellable> = []
     
     private lazy var submitButton: UIButton = {
         return commonFactory.buttonFactory.createMainFormButton(
@@ -78,8 +83,9 @@ class ProfileDataFormViewController: UIViewController {
     
     // MARK: - Init
     
-    init(commonFactory: GeneralFactory) {
+    init(commonFactory: GeneralFactory, profileViewModel: ProfileDataFormViewModel) {
         self.commonFactory = commonFactory
+        self.profileViewModel = profileViewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -113,11 +119,12 @@ class ProfileDataFormViewController: UIViewController {
         
        
         avatarPlaceholderImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapToUpload)))
+       
         configureConstraints()
+        bundViews()
     }
     
     @objc private func didTapToUpload() {
-       
         var configuration = PHPickerConfiguration()
         configuration.filter = .images
         configuration.selectionLimit = 1
@@ -126,7 +133,25 @@ class ProfileDataFormViewController: UIViewController {
         present(picker, animated: true)
     }
     
+    @objc private func didUpdateDisplayName() {
+        profileViewModel.displayName = dispalyNameTextField.text
+        profileViewModel.validateUserProfileForm()
+    }
+    @objc private func didUpadateUserName() {
+        profileViewModel.username = userNameTextField.text
+        profileViewModel.validateUserProfileForm()
+    }
+    
     // MARK: - Func
+    
+    func bundViews() {
+        dispalyNameTextField.addTarget(self, action: #selector(didUpdateDisplayName), for: .editingChanged)
+        userNameTextField.addTarget(self, action: #selector(didUpadateUserName), for: .editingChanged)
+        profileViewModel.$isFormValid.sink { [weak self] buttonState in
+            self?.submitButton.isEnabled = buttonState
+        }.store(in: &subscriptions)
+    }
+    
     
     private func configureConstraints() {
 
@@ -244,6 +269,10 @@ extension ProfileDataFormViewController: UITextViewDelegate {
         }
     }
     
+    func textViewDidChange(_ textView: UITextView) {
+        profileViewModel.bio = textView.text
+    }
+    
     func textViewDidEndEditing(_ textView: UITextView) {
         scrollView.setContentOffset(
             CGPoint(x: LayoutConstants.scrollViewDefaultXOffset, y: LayoutConstants.scrollViewDefaultYOffset), animated: true)
@@ -277,6 +306,8 @@ extension ProfileDataFormViewController: PHPickerViewControllerDelegate {
                 if let image = object as? UIImage {
                     DispatchQueue.main.async {
                         self?.avatarPlaceholderImageView.image = image
+                        self?.profileViewModel.imageData = image.jpegData(compressionQuality: 1)
+                        self?.profileViewModel.validateUserProfileForm()
                     }
                 }
             }

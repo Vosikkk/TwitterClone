@@ -1,5 +1,5 @@
 //
-//  DatabaseManager.swift
+//  UserDatabaseManager.swift
 //  TwitterClone
 //
 //  Created by Саша Восколович on 24.10.2023.
@@ -18,7 +18,7 @@ protocol DatabaseManager {
     func collectionUsers(retreive id: String) -> AnyPublisher<TwitterUser, Error>
 }
 
-final class StorageUserManager: DatabaseManager  {
+final class UserDatabaseManager: DatabaseManager {
     
     var db: Firestore = Firestore.firestore()
     

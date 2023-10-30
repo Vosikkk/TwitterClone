@@ -28,14 +28,20 @@ class HomeViewController: UIViewController {
     
     private let commonFactory: GeneralFactory
     
+    private let profileViewModel: ProfileDataFormViewModel
     
     
     // MARK: - Init
     
-    init(authenticationViewModel: AuthenticationViewModel, homeViewModel: HomeViewModel, commonFactory: GeneralFactory) {
+    init(authenticationViewModel: AuthenticationViewModel,
+         homeViewModel: HomeViewModel,
+         commonFactory: GeneralFactory,
+         profileViewModel: ProfileDataFormViewModel) {
+        
         self.authenticationViewModel = authenticationViewModel
         self.homeViewModel = homeViewModel
         self.commonFactory = commonFactory
+        self.profileViewModel = profileViewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -83,7 +89,8 @@ class HomeViewController: UIViewController {
     // MARK: - Func
     
     func compliteUserOnboarding() {
-        let vc = ProfileDataFormViewController(commonFactory: commonFactory)
+        let vc = ProfileDataFormViewController(commonFactory: commonFactory, 
+                                               profileViewModel: profileViewModel)
         present(vc, animated: true)
     }
     

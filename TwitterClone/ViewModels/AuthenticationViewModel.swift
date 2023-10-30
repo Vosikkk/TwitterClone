@@ -22,12 +22,12 @@ final class AuthenticationViewModel: ObservableObject {
     
     
     private let userAuth: AuthManager
-    private let storageUserManager: DatabaseManager
+    private let userDatabaseManager: DatabaseManager
     
     
-    init(userAuth: AuthManager, storageUserManager: DatabaseManager) {
+    init(userAuth: AuthManager, userDatabaseManager: DatabaseManager) {
         self.userAuth = userAuth
-        self.storageUserManager = storageUserManager
+        self.userDatabaseManager = userDatabaseManager
     }
     
     
@@ -56,7 +56,7 @@ final class AuthenticationViewModel: ObservableObject {
     }
     
     private func createRecord(for user: User) {
-        storageUserManager.collectionUsers(add: user)
+        userDatabaseManager.collectionUsers(add: user)
             .sink { [weak self] completion in
                 if case .failure(let error) = completion {
                     self?.error = error.localizedDescription

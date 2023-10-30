@@ -54,13 +54,14 @@
 		3887CF422ADB49320087BBE3 /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 3887CF412ADB49320087BBE3 /* FirebaseStorageCombine-Community */; };
 		3887CF452ADB4AF60087BBE3 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3887CF442ADB4AF60087BBE3 /* OnboardingViewController.swift */; };
 		38AFFD662AEEE7CF00BDE48D /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AFFD652AEEE7CF00BDE48D /* Extension.swift */; };
+		38AFFD682AEEFE8B00BDE48D /* UserStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AFFD672AEEFE8B00BDE48D /* UserStorageManager.swift */; };
 		38B204872AD589EC00C902BE /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B204862AD589EC00C902BE /* ProfileViewController.swift */; };
 		38B204892AD5965B00C902BE /* ProfileTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B204882AD5965B00C902BE /* ProfileTableViewHeader.swift */; };
 		38E6F6FF2ADD7099005DAE33 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E6F6FE2ADD7099005DAE33 /* RegisterViewController.swift */; };
 		38EC801C2AE321E300E5D1F9 /* UserAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EC801B2AE321E300E5D1F9 /* UserAuth.swift */; };
 		38F7EFB72AD5DB2000B0FB73 /* ProfileCustomUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F7EFB62AD5DB2000B0FB73 /* ProfileCustomUIView.swift */; };
 		38F958DE2AE7E3B90074544E /* TwitterUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F958DD2AE7E3B90074544E /* TwitterUser.swift */; };
-		38F958E02AE7E5600074544E /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F958DF2AE7E5600074544E /* DatabaseManager.swift */; };
+		38F958E02AE7E5600074544E /* UserDatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F958DF2AE7E5600074544E /* UserDatabaseManager.swift */; };
 		38F958E22AE7EF8F0074544E /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F958E12AE7EF8F0074544E /* HomeViewModel.swift */; };
 		38F958E42AE7F82D0074544E /* ProfileDataFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F958E32AE7F82D0074544E /* ProfileDataFormViewController.swift */; };
 		38F958E62AE7F9A00074544E /* ProfileDataFormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F958E52AE7F9A00074544E /* ProfileDataFormViewModel.swift */; };
@@ -89,13 +90,14 @@
 		387380332AEC63A6008604E7 /* LabelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelFactory.swift; sourceTree = "<group>"; };
 		3887CF442ADB4AF60087BBE3 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		38AFFD652AEEE7CF00BDE48D /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
+		38AFFD672AEEFE8B00BDE48D /* UserStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStorageManager.swift; sourceTree = "<group>"; };
 		38B204862AD589EC00C902BE /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		38B204882AD5965B00C902BE /* ProfileTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewHeader.swift; sourceTree = "<group>"; };
 		38E6F6FE2ADD7099005DAE33 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		38EC801B2AE321E300E5D1F9 /* UserAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAuth.swift; sourceTree = "<group>"; };
 		38F7EFB62AD5DB2000B0FB73 /* ProfileCustomUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCustomUIView.swift; sourceTree = "<group>"; };
 		38F958DD2AE7E3B90074544E /* TwitterUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitterUser.swift; sourceTree = "<group>"; };
-		38F958DF2AE7E5600074544E /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
+		38F958DF2AE7E5600074544E /* UserDatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDatabaseManager.swift; sourceTree = "<group>"; };
 		38F958E12AE7EF8F0074544E /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		38F958E32AE7F82D0074544E /* ProfileDataFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDataFormViewController.swift; sourceTree = "<group>"; };
 		38F958E52AE7F9A00074544E /* ProfileDataFormViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDataFormViewModel.swift; sourceTree = "<group>"; };
@@ -239,7 +241,8 @@
 			isa = PBXGroup;
 			children = (
 				38EC801B2AE321E300E5D1F9 /* UserAuth.swift */,
-				38F958DF2AE7E5600074544E /* DatabaseManager.swift */,
+				38F958DF2AE7E5600074544E /* UserDatabaseManager.swift */,
+				38AFFD672AEEFE8B00BDE48D /* UserStorageManager.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -371,6 +374,7 @@
 				38094BB02AD02A210050F18D /* SearchViewController.swift in Sources */,
 				3809BC982AE33E2F005A9AD3 /* AuthenticationViewModel.swift in Sources */,
 				38094B9C2AD025960050F18D /* MainTabBarViewController.swift in Sources */,
+				38AFFD682AEEFE8B00BDE48D /* UserStorageManager.swift in Sources */,
 				3873802E2AEBF34C008604E7 /* ButtonFactory.swift in Sources */,
 				38F958E22AE7EF8F0074544E /* HomeViewModel.swift in Sources */,
 				38094B982AD025960050F18D /* AppDelegate.swift in Sources */,
@@ -390,7 +394,7 @@
 				38B204892AD5965B00C902BE /* ProfileTableViewHeader.swift in Sources */,
 				383781902AE709C300BB6F3E /* CommonFormView.swift in Sources */,
 				38F958E62AE7F9A00074544E /* ProfileDataFormViewModel.swift in Sources */,
-				38F958E02AE7E5600074544E /* DatabaseManager.swift in Sources */,
+				38F958E02AE7E5600074544E /* UserDatabaseManager.swift in Sources */,
 				3837818C2AE706F500BB6F3E /* LoginViewController.swift in Sources */,
 				38E6F6FF2ADD7099005DAE33 /* RegisterViewController.swift in Sources */,
 				38F7EFB72AD5DB2000B0FB73 /* ProfileCustomUIView.swift in Sources */,

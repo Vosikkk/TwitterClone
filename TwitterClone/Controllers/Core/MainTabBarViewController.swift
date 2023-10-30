@@ -18,20 +18,28 @@ class MainTabBarViewController: UITabBarController {
         let textFieldFactory = TextFieldFactory()
         let labelFactory = LabelFactory()
         
+        
+       
+        
         let commonFactory = GeneralFactory(buttonFactory: buttonFactory,
                                           textFieldFactory: textFieldFactory,
                                           labelFactory: labelFactory)
-        
-        
+       
+        let userStorageManager: StorageManager = UserStorageManager()
         let userAuth: AuthManager = UserAuth()
-        let storageUserManager: DatabaseManager = StorageUserManager()
-        let homeViewModel = HomeViewModel(storageUserManager: storageUserManager)
-        let authenticationViewModel = AuthenticationViewModel(userAuth: userAuth, storageUserManager: storageUserManager)
+        let userDatabaseManager: DatabaseManager = UserDatabaseManager()
+        let homeViewModel = HomeViewModel(userDatabaseManager: userDatabaseManager)
+       
+        
+        let profileViewModel = ProfileDataFormViewModel(userStorageManager: userStorageManager)
+        let authenticationViewModel = AuthenticationViewModel(userAuth: userAuth, userDatabaseManager: userDatabaseManager)
         
         
-        let vc1 = UINavigationController(rootViewController: HomeViewController(authenticationViewModel: authenticationViewModel, 
+        let vc1 = UINavigationController(rootViewController: HomeViewController(authenticationViewModel: authenticationViewModel,
                                                                                 homeViewModel: homeViewModel,
-                                                                                commonFactory: commonFactory))
+                                                                                commonFactory: commonFactory,
+                                                                                profileViewModel: profileViewModel
+                                                                               ))
         
         let vc2 = UINavigationController(rootViewController: SearchViewController())
         let vc3 = UINavigationController(rootViewController: NotificationsViewController())

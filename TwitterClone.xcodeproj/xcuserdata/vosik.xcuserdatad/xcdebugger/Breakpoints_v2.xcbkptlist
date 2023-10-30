@@ -142,8 +142,8 @@
             filePath = "TwitterClone/Controllers/Core/HomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "101"
-            endingLineNumber = "101"
+            startingLineNumber = "108"
+            endingLineNumber = "108"
             landmarkName = "handleAuthentication()"
             landmarkType = "7">
          </BreakpointContent>
@@ -158,8 +158,8 @@
             filePath = "TwitterClone/Controllers/Core/HomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "102"
-            endingLineNumber = "102"
+            startingLineNumber = "109"
+            endingLineNumber = "109"
             landmarkName = "handleAuthentication()"
             landmarkType = "7">
          </BreakpointContent>

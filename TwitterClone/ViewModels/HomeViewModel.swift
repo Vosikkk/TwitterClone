@@ -19,8 +19,8 @@ final class HomeViewModel: ObservableObject {
     private let storageUserManager: DatabaseManager
     
     
-    init(storageUserManager: DatabaseManager) {
-        self.storageUserManager = storageUserManager
+    init(userDatabaseManager: DatabaseManager) {
+        self.storageUserManager = userDatabaseManager
     }
     
     
