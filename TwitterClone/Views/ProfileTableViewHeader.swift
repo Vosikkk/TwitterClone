@@ -20,7 +20,7 @@ class ProfileTableViewHeader: UIView {
     private let indicators: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = ColorConstants.colorView
+        view.backgroundColor = .tweeterBlueColor
         return view
     }()
     
@@ -106,12 +106,10 @@ class ProfileTableViewHeader: UIView {
     
     
     lazy var joinedDateLabel: UILabel = {
-        let label = commonFactory.labelFactory.createLabel(
+        return commonFactory.labelFactory.createLabel(
             textStyle: .secondaryLabel,
             fontSize: .systemFont(ofSize: FontSizeConstants.joinedDateLabelFontSize,
                                   weight: FontWeightConstants.joinedDateLabelWeight))
-        label.text = "Joined May 2021"
-        return label
     }()
     
     lazy var userBioLabel: UILabel = {

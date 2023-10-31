@@ -20,6 +20,21 @@ class HomeViewController: UIViewController {
         return tableView
     }()
     
+    private lazy var composeTweetButton: UIButton = {
+        let button = UIButton(type: .system, primaryAction: UIAction { [weak self] _ in
+            self?.navigateToTweetComposer()
+        })
+        
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.backgroundColor = .tweeterBlueColor
+        button.tintColor = .white
+        let plusSign = UIImage(systemName: "plus", withConfiguration: UIImage.SymbolConfiguration(pointSize: 18, weight: .bold))
+        button.setImage(plusSign, for: .normal)
+        button.layer.cornerRadius = 30
+        button.clipsToBounds = true
+        return button
+    }()
+    
     private let authenticationViewModel: AuthenticationViewModel
     
     private let homeViewModel: HomeViewModel
@@ -62,7 +77,9 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         view.addSubview(timelineTableView)
+        view.addSubview(composeTweetButton)
         
         timelineTableView.delegate = self
         timelineTableView.dataSource = self
@@ -74,12 +91,12 @@ class HomeViewController: UIViewController {
             target: self,
             action: #selector(didTapSignOut))
         bindViews()
-        
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         timelineTableView.frame = view.frame
+        configureConstraints()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -142,6 +159,25 @@ class HomeViewController: UIViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: profileImage, style: .plain, target: self, action: #selector(didTapProfile))
     }
     
+    private func navigateToTweetComposer() {
+        let vc = UINavigationController(rootViewController: TweetComposeViewController())
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+    }
+    
+    private func configureConstraints() {
+        let composeTweetButtonConstraints = [
+            composeTweetButton.trailingAnchor.constraint(
+                equalTo: view.trailingAnchor, constant: LayuoutConstants.composeTweetButtonTrailingOffset),
+            composeTweetButton.bottomAnchor.constraint(
+                equalTo: view.bottomAnchor, constant: LayuoutConstants.composeTweetButtonBottomOffset),
+            composeTweetButton.widthAnchor.constraint(equalToConstant: SizeConstants.composeTweetButtonWidth),
+            composeTweetButton.heightAnchor.constraint(equalToConstant: SizeConstants.composeTweetButtonHeight)
+        
+        ]
+        NSLayoutConstraint.activate(composeTweetButtonConstraints)
+    }
+    
     
     // MARK: - @objc Func
     
@@ -164,6 +200,13 @@ class HomeViewController: UIViewController {
         static let widthForNavigatorView: CGFloat = 36
         static let heightForNavigatorView: CGFloat = 36
         static let numberOfRows: Int = 10
+        static let composeTweetButtonWidth: CGFloat = 60
+        static let composeTweetButtonHeight: CGFloat = 60
+    }
+    
+    private struct LayuoutConstants {
+        static let composeTweetButtonTrailingOffset: CGFloat = -15
+        static let composeTweetButtonBottomOffset: CGFloat = -95
     }
     
     private struct PositionConstants {

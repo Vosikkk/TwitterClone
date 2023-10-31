@@ -58,8 +58,10 @@
 		3887CF452ADB4AF60087BBE3 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3887CF442ADB4AF60087BBE3 /* OnboardingViewController.swift */; };
 		38AFFD662AEEE7CF00BDE48D /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AFFD652AEEE7CF00BDE48D /* Extension.swift */; };
 		38AFFD682AEEFE8B00BDE48D /* UserStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AFFD672AEEFE8B00BDE48D /* UserStorageManager.swift */; };
+		38B178FF2AF198F100CB51F7 /* TweetComposeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B178FE2AF198F100CB51F7 /* TweetComposeViewController.swift */; };
 		38B204872AD589EC00C902BE /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B204862AD589EC00C902BE /* ProfileViewController.swift */; };
 		38B204892AD5965B00C902BE /* ProfileTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B204882AD5965B00C902BE /* ProfileTableViewHeader.swift */; };
+		38E491AB2AF1A9EA00B9B064 /* Tweet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E491AA2AF1A9EA00B9B064 /* Tweet.swift */; };
 		38E6F6FF2ADD7099005DAE33 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E6F6FE2ADD7099005DAE33 /* RegisterViewController.swift */; };
 		38EC801C2AE321E300E5D1F9 /* UserAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EC801B2AE321E300E5D1F9 /* UserAuth.swift */; };
 		38F7EFB72AD5DB2000B0FB73 /* ProfileCustomUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F7EFB62AD5DB2000B0FB73 /* ProfileCustomUIView.swift */; };
@@ -95,8 +97,10 @@
 		3887CF442ADB4AF60087BBE3 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		38AFFD652AEEE7CF00BDE48D /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		38AFFD672AEEFE8B00BDE48D /* UserStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStorageManager.swift; sourceTree = "<group>"; };
+		38B178FE2AF198F100CB51F7 /* TweetComposeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetComposeViewController.swift; sourceTree = "<group>"; };
 		38B204862AD589EC00C902BE /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		38B204882AD5965B00C902BE /* ProfileTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewHeader.swift; sourceTree = "<group>"; };
+		38E491AA2AF1A9EA00B9B064 /* Tweet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tweet.swift; sourceTree = "<group>"; };
 		38E6F6FE2ADD7099005DAE33 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		38EC801B2AE321E300E5D1F9 /* UserAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAuth.swift; sourceTree = "<group>"; };
 		38F7EFB62AD5DB2000B0FB73 /* ProfileCustomUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCustomUIView.swift; sourceTree = "<group>"; };
@@ -240,6 +244,7 @@
 			children = (
 				38B204862AD589EC00C902BE /* ProfileViewController.swift */,
 				38F958E32AE7F82D0074544E /* ProfileDataFormViewController.swift */,
+				38B178FE2AF198F100CB51F7 /* TweetComposeViewController.swift */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -271,6 +276,7 @@
 			isa = PBXGroup;
 			children = (
 				38F958DD2AE7E3B90074544E /* TwitterUser.swift */,
+				38E491AA2AF1A9EA00B9B064 /* Tweet.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -405,8 +411,10 @@
 				38B204892AD5965B00C902BE /* ProfileTableViewHeader.swift in Sources */,
 				383781902AE709C300BB6F3E /* CommonFormView.swift in Sources */,
 				38F958E62AE7F9A00074544E /* ProfileDataFormViewModel.swift in Sources */,
+				38E491AB2AF1A9EA00B9B064 /* Tweet.swift in Sources */,
 				38F958E02AE7E5600074544E /* UserDatabaseManager.swift in Sources */,
 				3837818C2AE706F500BB6F3E /* LoginViewController.swift in Sources */,
+				38B178FF2AF198F100CB51F7 /* TweetComposeViewController.swift in Sources */,
 				38E6F6FF2ADD7099005DAE33 /* RegisterViewController.swift in Sources */,
 				38F7EFB72AD5DB2000B0FB73 /* ProfileCustomUIView.swift in Sources */,
 				38094BB82AD0345B0050F18D /* TweetTableViewCell.swift in Sources */,

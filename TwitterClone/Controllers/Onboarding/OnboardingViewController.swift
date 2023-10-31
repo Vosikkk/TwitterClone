@@ -47,7 +47,7 @@ class OnboardingViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle(TitleConstants.loginButtonTitle, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: FontConstants.promptLabelFontSize)
-        button.tintColor = ColorConstants.colorButton
+        button.tintColor = .tweeterBlueColor
         return button
     }()
     

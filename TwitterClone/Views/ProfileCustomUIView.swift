@@ -6,21 +6,7 @@
 //
 
 import UIKit
-
-
-
-extension CGRect {
-    func zoom(by scale: CGFloat) -> CGRect {
-        let newWidth = width * scale
-        let newHeight = height * scale
-        return insetBy(dx: (width - newWidth) / 2, dy: (height - newHeight) / 2)
-    }
-}
-extension CGPoint {
-    func offsetBy(dx: CGFloat, dy: CGFloat) -> CGPoint {
-        return CGPoint(x: x+dx, y: y+dy)
-    }
-}
+import SDWebImage
 
 
 class ProfileCustomUIView: UIView {
@@ -67,6 +53,7 @@ class ProfileCustomUIView: UIView {
     
     
     func setAvatarImage(url: URL?) {
+        guard let url else { return }
         avatarImageView.sd_setImage(with: url)
     }
     
