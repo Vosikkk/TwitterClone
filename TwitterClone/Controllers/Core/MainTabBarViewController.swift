@@ -35,12 +35,14 @@ class MainTabBarViewController: UITabBarController {
         let profileViewModel = ProfileDataFormViewModel(userStorageManager: userStorageManager, databaseManager: userDatabaseManager)
         let authenticationViewModel = AuthenticationViewModel(userAuth: userAuth, userDatabaseManager: userDatabaseManager)
         let profileViewViewModel = ProfileViewViewModel(userDatabaseManager: userDatabaseManager)
+        let composeViewModel = TweetComposeViewModel(userDatabaseManager: userDatabaseManager)
         
         let vc1 = UINavigationController(rootViewController: HomeViewController(authenticationViewModel: authenticationViewModel,
                                                                                 homeViewModel: homeViewModel,
                                                                                 commonFactory: commonFactory,
                                                                                 profileViewModel: profileViewModel,
-                                                                                profileViewViewModel: profileViewViewModel 
+                                                                                profileViewViewModel: profileViewViewModel,
+                                                                                composeViewModel: composeViewModel
                                                                                ))
         
         let vc2 = UINavigationController(rootViewController: SearchViewController())

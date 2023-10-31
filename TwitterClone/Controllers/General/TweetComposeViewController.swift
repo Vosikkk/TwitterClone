@@ -6,9 +6,14 @@
 //
 
 import UIKit
+import Combine
+
 
 class TweetComposeViewController: UIViewController {
 
+    
+    private var subscriptions: Set<AnyCancellable> = []
+    
     private let tweetButton: UIButton = {
         let button = UIButton(type: .system)
         button.backgroundColor = .tweeterBlueColor
@@ -16,6 +21,8 @@ class TweetComposeViewController: UIViewController {
         button.setTitleColor(.white, for: .normal)
         button.layer.cornerRadius = SizeConstants.tweetButtonCornerRadius
         button.clipsToBounds = true
+        button.isEnabled = false
+        button.setTitleColor(.white.withAlphaComponent(0.7), for: .disabled)
         button.widthAnchor.constraint(equalToConstant: SizeConstants.tweetButtonWidth).isActive = true
         button.heightAnchor.constraint(equalToConstant: SizeConstants.tweetButtonHeight).isActive = true
         return button
@@ -41,6 +48,19 @@ class TweetComposeViewController: UIViewController {
         return label
     }()
     
+    private let composeViewModel: TweetComposeViewModel
+    
+    
+    init(composeViewModel: TweetComposeViewModel) {
+        self.composeViewModel = composeViewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
@@ -54,11 +74,38 @@ class TweetComposeViewController: UIViewController {
         view.addSubview(tweetContentTextView)
         view.addSubview(characterCountLabel)
         
+        tweetButton.addTarget(self, action: #selector(didTapToTweet), for: .touchUpInside)
+        
         configureConstraints()
+        bindViews()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        composeViewModel.getUserData()
     }
     
     @objc func didTapToCancel() {
         dismiss(animated: true)
+    }
+    
+    @objc func didTapToTweet() {
+        composeViewModel.dispatchTweet()
+    }
+    
+    
+    private func bindViews() {
+        composeViewModel.$isValideToTweet.sink { [weak self] state in
+            self?.tweetButton.isEnabled = state
+            
+        }
+        .store(in: &subscriptions)
+        
+        composeViewModel.$shouldDismissScreen.sink { [weak self] success in
+            if success {
+                self?.dismiss(animated: true)
+            }
+        }.store(in: &subscriptions)
     }
     
     private func configureConstraints() {
@@ -114,15 +161,19 @@ extension TweetComposeViewController: UITextViewDelegate {
         }
     }
     
+    func textViewDidChange(_ textView: UITextView) {
+        composeViewModel.tweetContent = textView.text
+        composeViewModel.validateTweet()
+    }
+    
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        // Обмеження до 140 символів
+       
         let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
         let remainingCharacters = 140 - newText.count
         
-        // Оновлення лейблу
+        
         characterCountLabel.text = "\(remainingCharacters)/140"
         
-        // Перевірка на обмеження
         return newText.count <= 140
     }
 }

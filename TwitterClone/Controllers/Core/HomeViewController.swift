@@ -47,19 +47,23 @@ class HomeViewController: UIViewController {
     
     private let profileViewViewModel: ProfileViewViewModel
     
+    private let composeViewModel: TweetComposeViewModel
+    
     // MARK: - Init
     
     init(authenticationViewModel: AuthenticationViewModel,
          homeViewModel: HomeViewModel,
          commonFactory: GeneralFactory,
          profileViewModel: ProfileDataFormViewModel,
-         profileViewViewModel: ProfileViewViewModel ) {
+         profileViewViewModel: ProfileViewViewModel,
+         composeViewModel: TweetComposeViewModel) {
         
         self.authenticationViewModel = authenticationViewModel
         self.homeViewModel = homeViewModel
         self.commonFactory = commonFactory
         self.profileViewModel = profileViewModel
         self.profileViewViewModel = profileViewViewModel
+        self.composeViewModel = composeViewModel
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -160,7 +164,7 @@ class HomeViewController: UIViewController {
     }
     
     private func navigateToTweetComposer() {
-        let vc = UINavigationController(rootViewController: TweetComposeViewController())
+        let vc = UINavigationController(rootViewController: TweetComposeViewController(composeViewModel: composeViewModel))
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }
