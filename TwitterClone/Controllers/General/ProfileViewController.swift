@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import Combine
+import SDWebImage
 
 class ProfileViewController: UIViewController {
 
@@ -17,6 +19,10 @@ class ProfileViewController: UIViewController {
     var profileAvatar = ProfileCustomUIView()
     
     private let commonFactory: GeneralFactory
+    
+    private let profileViewViewModel: ProfileViewViewModel
+    
+    private var subscriptions: Set<AnyCancellable> = []
     
     private let statusBar: UIView = {
         let view = UIView()
@@ -34,9 +40,16 @@ class ProfileViewController: UIViewController {
         return tableView
     }()
     
+    private lazy var headerView = ProfileTableViewHeader(frame:
+                                                        CGRect(x: 0, y: 0,
+                                                               width: profileTableView.frame.width,
+                                                               height: SizeConstants.headerHeight),
+                                                    commonFactory: commonFactory)
     
-    init(commonFactory: GeneralFactory) {
+    
+    init(commonFactory: GeneralFactory, profileViewViewModel: ProfileViewViewModel) {
         self.commonFactory = commonFactory
+        self.profileViewViewModel = profileViewViewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -44,8 +57,7 @@ class ProfileViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
-    
+   
     // MARK: - Controller life cycle
     
     override func viewDidLoad() {
@@ -54,23 +66,29 @@ class ProfileViewController: UIViewController {
         navigationItem.title = "Profile"
         view.addSubview(profileTableView)
         
-        let header = ProfileTableViewHeader(frame:
-                                                CGRect(x: 0, y: 0,
-                                                       width: profileTableView.frame.width,
-                                                       height: SizeConstants.headerHeight),
-                                            commonFactory: commonFactory)
+       
         
         navigationController?.navigationBar.isHidden = true
         
         profileTableView.dataSource = self
         profileTableView.delegate = self
-        profileTableView.tableHeaderView = header   
+        profileTableView.tableHeaderView = headerView
         profileTableView.contentInsetAdjustmentBehavior = .never
         profileTableView.addSubview(profileAvatar)
         
         view.addSubview(statusBar)
         
+       
+        
         configureConstraints()
+        
+        bindViews()
+    }
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        profileViewViewModel.retreiveUser()
     }
     
     override func viewDidLayoutSubviews() {
@@ -83,6 +101,24 @@ class ProfileViewController: UIViewController {
     }
     
     // MARK: - Func
+    
+    private func bindViews() {
+        profileViewViewModel.$user.sink { [weak self] user in
+            guard let user = user else { return }
+            self?.headerView.displayNameLabel.text = user.displayName
+            self?.headerView.userNameLabel.text = "@\(user.username)"
+            self?.headerView.followersCountLabel.text = "\(user.followersCount)"
+            self?.headerView.followingCountLabel.text = "\(user.followingCount)"
+            self?.headerView.userBioLabel.text = user.bio
+            self?.profileAvatar.setAvatarImage(url: URL(string: user.avatarPath))
+            
+        }
+        .store(in: &subscriptions)
+    }
+    
+    
+    
+    
     
     private func updateParallaxOffset(_ offset: CGFloat) {
         let parallaxOffset = offset / 2 // Змініть значення залежно від бажаного ефекту
@@ -190,35 +226,3 @@ struct AppStyle {
         }
     }
 }
-
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        let yPosition = scrollView.contentOffset.y
-//        if yPosition > Constants.minScroll {
-//            let scale = 1.0 - min(1.0, max(yPosition / 100, 0.0))
-//            let clampedScale = max(min(scale, Constants.maxScale), Constants.minScale)
-//            let translation = max(0, min(yPosition, Constants.translationOffset))
-//
-//            UIView.animate(withDuration: Constants.animationDuration) {
-//                self.profileAvatar.transform = CGAffineTransform.identity.scaledBy(x: clampedScale, y: clampedScale)
-//                self.profileAvatar.transform = self.profileAvatar.transform.translatedBy(x: 0, y: translation)
-//            }
-//        } else {
-//            UIView.animate(withDuration: Constants.animationDuration) {
-//                self.profileAvatar.transform = CGAffineTransform.identity.scaledBy(x: Constants.maxScale, y: Constants.maxScale)
-//                self.profileAvatar.transform = self.profileAvatar.transform.translatedBy(x: 0, y: Constants.minScroll)
-//            }
-//        }
-//
-//        if yPosition > 25 && isStatusBarHidden {
-//            isStatusBarHidden = false
-//            UIView.animate(withDuration: 0.3, delay: 0, options: [.curveLinear, .beginFromCurrentState]) { [weak self] in
-//                self?.statusBar.layer.opacity = 1
-//            }
-//        } else if yPosition < 0 && !isStatusBarHidden {
-//            isStatusBarHidden = true
-//            UIView.animate(withDuration: 0.3, delay: 0, options: .curveLinear) { [weak self] in
-//                self?.statusBar.layer.opacity = 0
-//            }
-//        }
-//    }
-    

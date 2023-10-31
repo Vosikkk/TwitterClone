@@ -58,65 +58,64 @@ class ProfileTableViewHeader: UIView {
         return stackView
     }()
     
-    private lazy var displayNameLabel: UILabel = {
+     lazy var displayNameLabel: UILabel = {
         return commonFactory.labelFactory.createLabel(
-            with: "Sasha",
             textStyle: .label,
             fontSize: .systemFont(ofSize: FontSizeConstants.displayNameLabelFontSize, 
                                   weight: FontWeightConstants.displayNameLabelWeight))
     }()
     
-    private lazy var userNameLabel: UILabel = {
+     lazy var userNameLabel: UILabel = {
         return commonFactory.labelFactory.createLabel(
-            with: "@vosikk",
             textStyle: .secondaryLabel,
             fontSize: .systemFont(ofSize: FontSizeConstants.userNameLabelFontSize, 
                                   weight: FontWeightConstants.userNameLabelWeight))
     }()
     
     private lazy var followersTextLabel: UILabel = {
-        return commonFactory.labelFactory.createLabel(
-            with: "Followers",
+         let label = commonFactory.labelFactory.createLabel(
             textStyle: .secondaryLabel,
             fontSize: .systemFont(ofSize: FontSizeConstants.followersTextLabelFontSize, 
                                   weight: FontWeightConstants.followersTextLabelWeight))
+        label.text = "Followers"
+        return label
     }()
     
-    private lazy var followersCountLabel: UILabel = {
+    lazy var followersCountLabel: UILabel = {
         return commonFactory.labelFactory.createLabel(
-            with: "2M",
             textStyle: .label,
             fontSize: .systemFont(ofSize: FontSizeConstants.followersCountLabelFontSize, 
                                   weight: FontWeightConstants.followersCountLabelWeight))
     }()
    
     private lazy var followingTextLabel: UILabel = {
-        return commonFactory.labelFactory.createLabel(
-            with: "Following",
+         let label = commonFactory.labelFactory.createLabel(
             textStyle: .secondaryLabel,
             fontSize: .systemFont(ofSize: FontSizeConstants.followingTextLabelFontSize, 
                                   weight: FontWeightConstants.followingTextLabelWeight))
+        label.text = "Following"
+        return label
     }()
     
-    private lazy var followingCountLabel: UILabel = {
+    lazy var followingCountLabel: UILabel = {
         return commonFactory.labelFactory.createLabel(
-            with: "215",
             textStyle: .label,
-            fontSize: .systemFont(ofSize: FontSizeConstants.followingCountLabelFontSize, 
+            fontSize: .systemFont(ofSize: FontSizeConstants.followingCountLabelFontSize,
                                   weight: FontWeightConstants.followingCountLabelWeight))
     }()
     
     
-    private lazy var joinedDateLabel: UILabel = {
-        return commonFactory.labelFactory.createLabel(
-            with: "Joined May 2021",
+    lazy var joinedDateLabel: UILabel = {
+        let label = commonFactory.labelFactory.createLabel(
             textStyle: .secondaryLabel,
-            fontSize: .systemFont(ofSize: FontSizeConstants.joinedDateLabelFontSize, 
+            fontSize: .systemFont(ofSize: FontSizeConstants.joinedDateLabelFontSize,
                                   weight: FontWeightConstants.joinedDateLabelWeight))
+        label.text = "Joined May 2021"
+        return label
     }()
     
-    private lazy var userBioLabel: UILabel = {
-        let label = commonFactory.labelFactory.createLabel(with: "iOS developer", textStyle: .label, fontSize: .systemFont(ofSize: 14))
+    lazy var userBioLabel: UILabel = {
+        let label = commonFactory.labelFactory.createLabel(textStyle: .label, fontSize: .systemFont(ofSize: 14))
         label.numberOfLines = 3
         return label
     }()
@@ -137,6 +136,9 @@ class ProfileTableViewHeader: UIView {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
+    
+    
+   
     
     
     // MARK: - Init

@@ -35,10 +35,11 @@ class ProfileDataFormViewController: UIViewController {
     
     
     private lazy var hintLabel: UILabel = {
-        return commonFactory.labelFactory.createLabel(
-            with: "Fill in your data",
+         let label = commonFactory.labelFactory.createLabel(
             textStyle: .label,
             fontSize: .systemFont(ofSize: FontSizeConstants.hintLabelFontSize, weight: .bold))
+        label.text = "Fill in your data"
+        return label
     }()
     
     private lazy var dispalyNameTextField: UITextField = {
@@ -139,7 +140,7 @@ class ProfileDataFormViewController: UIViewController {
     
     deinit {
         profileViewModel.error = ""
-        print("ProfileDataFormViewController деініціалізований")
+        print(" деініціалізований")
     }
     
     

@@ -30,18 +30,22 @@ class HomeViewController: UIViewController {
     
     private let profileViewModel: ProfileDataFormViewModel
     
+    private let profileViewViewModel: ProfileViewViewModel
     
     // MARK: - Init
     
     init(authenticationViewModel: AuthenticationViewModel,
          homeViewModel: HomeViewModel,
          commonFactory: GeneralFactory,
-         profileViewModel: ProfileDataFormViewModel) {
+         profileViewModel: ProfileDataFormViewModel,
+         profileViewViewModel: ProfileViewViewModel ) {
         
         self.authenticationViewModel = authenticationViewModel
         self.homeViewModel = homeViewModel
         self.commonFactory = commonFactory
         self.profileViewModel = profileViewModel
+        self.profileViewViewModel = profileViewViewModel
+        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -150,7 +154,7 @@ class HomeViewController: UIViewController {
     
     
     @objc private func didTapProfile() {
-        let vc = ProfileViewController(commonFactory: commonFactory)
+        let vc = ProfileViewController(commonFactory: commonFactory, profileViewViewModel: profileViewViewModel )
         navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -189,8 +193,8 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
 // MARK: - TweetTableViewCellDelegate
 
 extension HomeViewController: TweetTableViewCellDelegate {
-    func tweetTableViewCellDidTapReply(what cell: TweetTableViewCell) {
-        print("It's reply + \(cell)")
+    func tweetTableViewCellDidTapReply() {
+        print("It's reply")
     }
     
     func tweetTableViewCellDidTapRetweet() {

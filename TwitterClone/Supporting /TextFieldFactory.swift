@@ -29,13 +29,12 @@ final class TextFieldFactory: TextFieldFactoryProtocol {
     
     
     func createCommonTextField(with placeholder: String) -> UITextField {
-        let textFiled = UITextField()
-        textFiled.translatesAutoresizingMaskIntoConstraints = false
-        textFiled.attributedPlaceholder = NSAttributedString(
+        let textField = UITextField()
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.attributedPlaceholder = NSAttributedString(
             string: placeholder,
             attributes: [.foregroundColor: UIColor.gray]
         )
-        textFiled.keyboardType = .emailAddress
-        return textFiled
+        return textField
     }
 }

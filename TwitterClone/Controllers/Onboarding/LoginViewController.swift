@@ -23,11 +23,15 @@ class LoginViewController: UIViewController, CommonFormView {
     }()
     
     lazy var emailTextFiled: UITextField = {
-        commonFactory.textFieldFactory.createCommonTextField(with: TitleConstants.emailTextFiledPlaceholder)
+        let textField = commonFactory.textFieldFactory.createCommonTextField(with: TitleConstants.emailTextFiledPlaceholder)
+        textField.keyboardType = .emailAddress
+        return textField
     }()
     
     lazy var passwordTextField: UITextField = {
-        commonFactory.textFieldFactory.createCommonTextField(with: TitleConstants.passwordTextFieldPlaceholder)
+        let textField = commonFactory.textFieldFactory.createCommonTextField(with: TitleConstants.passwordTextFieldPlaceholder)
+        textField.isSecureTextEntry = true
+        return textField
     }()
     
     var loginLabel: UILabel = {

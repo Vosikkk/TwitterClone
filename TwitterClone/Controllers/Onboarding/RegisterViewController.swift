@@ -21,11 +21,15 @@ class RegisterViewController: UIViewController, CommonFormView {
     private var subscriptions: Set<AnyCancellable> = []
     
     lazy var passwordTextField: UITextField = {
-        return commonFactory.textFieldFactory.createCommonTextField(with: TitleConstants.passwordTextFieldPlaceholder)
+         let textField = commonFactory.textFieldFactory.createCommonTextField(with: TitleConstants.passwordTextFieldPlaceholder)
+         textField.isSecureTextEntry = true
+         return textField
     }()
     
     lazy var emailTextFiled: UITextField = {
-        return commonFactory.textFieldFactory.createCommonTextField(with: TitleConstants.emailTextFiledPlaceholder)
+        let textField = commonFactory.textFieldFactory.createCommonTextField(with: TitleConstants.emailTextFiledPlaceholder)
+        textField.keyboardType = .emailAddress
+        return textField
     }()
     
     lazy var actionButton: UIButton = {

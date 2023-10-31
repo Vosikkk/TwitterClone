@@ -16,26 +16,28 @@ class OnboardingViewController: UIViewController {
     private let authenticationViewModel: AuthenticationViewModel
     
     lazy var createAccountButton: UIButton = {
-        return commonFactory.buttonFactory.createMainFormButton(
+        let button = commonFactory.buttonFactory.createMainFormButton(
             with: TitleConstants.createAccountButtonTitle,
             fontSize: FontConstants.createAccountButtonFontSize)
+        button.isEnabled = true
+        return button
     }()
     
     private lazy var welcomeLabel: UILabel = {
         let label = commonFactory.labelFactory.createLabel(
-            with: TitleConstants.welcomeLabelTitle,
             textStyle: .label,
             fontSize: .systemFont(ofSize: FontConstants.welcomeLabelFontSize, weight: .heavy))
         label.textAlignment = .center
         label.numberOfLines = 0
+        label.text = TitleConstants.welcomeLabelTitle
         return label
     }()
     
     private lazy var promptLabel: UILabel = {
         let label = commonFactory.labelFactory.createLabel(
-            with: TitleConstants.promptLabelTitle,
             textStyle: .secondaryLabel,
             fontSize: .systemFont(ofSize: FontConstants.promptLabelFontSize, weight: .regular))
+        label.text = TitleConstants.promptLabelTitle
         label.textColor = .gray
         return label
     }()
