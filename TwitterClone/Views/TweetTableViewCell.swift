@@ -31,14 +31,12 @@ class TweetTableViewCell: UITableViewCell {
     private let displayNameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Sasha Voskolovych"
         label.font = .systemFont(ofSize: FontSizeConstants.displayNameLabelFontSize, weight: .bold)
         return label
     }()
     
     private let userNameLabel: UILabel = {
         let label = UILabel()
-        label.text = "@Vosik"
         label.textColor = .secondaryLabel
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .systemFont(ofSize: FontSizeConstants.userNameLabelFontSize, weight: .regular)
@@ -48,7 +46,6 @@ class TweetTableViewCell: UITableViewCell {
     private let tweetTextContentLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "This my Mockup tweet. It is going to take multiple lines. I believe some more text is enough but let some more anyway .. and cheers youtube "
         label.numberOfLines = 0
         
         return label
@@ -146,6 +143,14 @@ class TweetTableViewCell: UITableViewCell {
         retweetButton.addTarget(self, action: #selector(didTapRetweet), for: .touchUpInside)
         likeButton.addTarget(self, action: #selector(didTapLike), for: .touchUpInside)
         shareButton.addTarget(self, action: #selector(didTapSahre), for: .touchUpInside)
+    }
+    
+    
+    func configureTweet(with displayName: String, username: String, tweetText: String, avatarPath: String) {
+        displayNameLabel.text = displayName
+        userNameLabel.text = "@\(username)"
+        tweetTextContentLabel.text = tweetText
+        profileAvatar.setAvatarImage(url: URL(string: avatarPath))
     }
     
     

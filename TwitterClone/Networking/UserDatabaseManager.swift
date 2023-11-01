@@ -21,10 +21,11 @@ protocol DatabaseManager {
     func collectionUsers(retreive id: String) -> AnyPublisher<TwitterUser, Error>
     func collecttionUsers(updateFields: [String: Any], for id: String) -> AnyPublisher<Bool, Error>
     func collectionTweets(dispatch tweet: Tweet) -> AnyPublisher<Bool, Error>
+    func collectionTweets(retreiveTweets forUserID: String) -> AnyPublisher<[Tweet], Error>
 }
 
 final class UserDatabaseManager: DatabaseManager {
-    
+   
     var db: Firestore = Firestore.firestore()
     
     var tweetsPath: String = "tweets"
@@ -53,6 +54,18 @@ final class UserDatabaseManager: DatabaseManager {
     func collectionTweets(dispatch tweet: Tweet) -> AnyPublisher<Bool, Error> {
         db.collection(tweetsPath).document(tweet.id).setData(from: tweet)
             .map { _ in true }
+            .eraseToAnyPublisher()
+    }
+    
+    func collectionTweets(retreiveTweets forUserID: String) -> AnyPublisher<[Tweet], Error> {
+        db.collection(tweetsPath).whereField("authorID", isEqualTo: forUserID)
+            .getDocuments()
+            .tryMap(\.documents)
+            .tryMap { snapshots in
+                try snapshots.map {
+                    try $0.data(as: Tweet.self)
+                }
+            }
             .eraseToAnyPublisher()
     }
 }

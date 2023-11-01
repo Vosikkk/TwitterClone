@@ -15,7 +15,7 @@ class ProfileDataFormViewController: UIViewController {
     
     private let commonFactory: GeneralFactory
     
-    private let profileViewModel: ProfileDataFormViewModel
+    private let profileDataViewModel: ProfileDataFormViewModel
     
     private var subscriptions: Set<AnyCancellable> = []
     
@@ -84,9 +84,9 @@ class ProfileDataFormViewController: UIViewController {
     
     // MARK: - Init
     
-    init(commonFactory: GeneralFactory, profileViewModel: ProfileDataFormViewModel) {
+    init(commonFactory: GeneralFactory, profileDataViewModel: ProfileDataFormViewModel) {
         self.commonFactory = commonFactory
-        self.profileViewModel = profileViewModel
+        self.profileDataViewModel = profileDataViewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -135,22 +135,22 @@ class ProfileDataFormViewController: UIViewController {
     }
     
     @objc private func didTapSubmit() {
-        profileViewModel.uploadAvatar()
+        profileDataViewModel.uploadAvatar()
     }
     
     deinit {
-        profileViewModel.error = ""
+        profileDataViewModel.error = ""
         print(" деініціалізований")
     }
     
     
     @objc private func didUpdateDisplayName() {
-        profileViewModel.displayName = dispalyNameTextField.text
-        profileViewModel.validateUserProfileForm()
+        profileDataViewModel.displayName = dispalyNameTextField.text
+        profileDataViewModel.validateUserProfileForm()
     }
     @objc private func didUpadateUserName() {
-        profileViewModel.username = userNameTextField.text
-        profileViewModel.validateUserProfileForm()
+        profileDataViewModel.username = userNameTextField.text
+        profileDataViewModel.validateUserProfileForm()
     }
     
     // MARK: - Func
@@ -158,12 +158,12 @@ class ProfileDataFormViewController: UIViewController {
     func bundViews() {
         dispalyNameTextField.addTarget(self, action: #selector(didUpdateDisplayName), for: .editingChanged)
         userNameTextField.addTarget(self, action: #selector(didUpadateUserName), for: .editingChanged)
-        profileViewModel.$isFormValid.sink { [weak self] buttonState in
+        profileDataViewModel.$isFormValid.sink { [weak self] buttonState in
             self?.submitButton.isEnabled = buttonState
         }
         .store(in: &subscriptions)
         
-        profileViewModel.$isOnboardingFinished.sink { [weak self] success in
+        profileDataViewModel.$isOnboardingFinished.sink { [weak self] success in
             if success {
                 self?.dismiss(animated: true)
             }
@@ -289,8 +289,8 @@ extension ProfileDataFormViewController: UITextViewDelegate {
     }
     
     func textViewDidChange(_ textView: UITextView) {
-        profileViewModel.bio = textView.text
-        profileViewModel.validateUserProfileForm()
+        profileDataViewModel.bio = textView.text
+        profileDataViewModel.validateUserProfileForm()
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
@@ -326,8 +326,8 @@ extension ProfileDataFormViewController: PHPickerViewControllerDelegate {
                 if let image = object as? UIImage {
                     DispatchQueue.main.async {
                         self?.avatarPlaceholderImageView.image = image
-                        self?.profileViewModel.imageData = image.jpegData(compressionQuality: 0.5)
-                        self?.profileViewModel.validateUserProfileForm()
+                        self?.profileDataViewModel.imageData = image.jpegData(compressionQuality: 0.5)
+                        self?.profileDataViewModel.validateUserProfileForm()
                     }
                 }
             }

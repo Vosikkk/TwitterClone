@@ -43,7 +43,7 @@ class HomeViewController: UIViewController {
     
     private let commonFactory: GeneralFactory
     
-    private let profileViewModel: ProfileDataFormViewModel
+    private let profileDataViewModel: ProfileDataFormViewModel
     
     private let profileViewViewModel: ProfileViewViewModel
     
@@ -54,14 +54,14 @@ class HomeViewController: UIViewController {
     init(authenticationViewModel: AuthenticationViewModel,
          homeViewModel: HomeViewModel,
          commonFactory: GeneralFactory,
-         profileViewModel: ProfileDataFormViewModel,
+         profileDataViewModel: ProfileDataFormViewModel,
          profileViewViewModel: ProfileViewViewModel,
          composeViewModel: TweetComposeViewModel) {
         
         self.authenticationViewModel = authenticationViewModel
         self.homeViewModel = homeViewModel
         self.commonFactory = commonFactory
-        self.profileViewModel = profileViewModel
+        self.profileDataViewModel = profileDataViewModel
         self.profileViewViewModel = profileViewViewModel
         self.composeViewModel = composeViewModel
         
@@ -115,7 +115,7 @@ class HomeViewController: UIViewController {
     
     func compliteUserOnboarding() {
         let vc = ProfileDataFormViewController(commonFactory: commonFactory, 
-                                               profileViewModel: profileViewModel)
+                                               profileDataViewModel: profileDataViewModel)
         present(vc, animated: true)
     }
     
@@ -124,6 +124,13 @@ class HomeViewController: UIViewController {
             guard let user = user else { return }
             if !user.isUserOnboarded {
                 self?.compliteUserOnboarding()
+            }
+        }
+        .store(in: &subscriptions)
+        
+        homeViewModel.$tweets.sink { [weak self] _ in
+            DispatchQueue.main.async {
+                self?.timelineTableView.reloadData()
             }
         }
         .store(in: &subscriptions)
@@ -189,7 +196,7 @@ class HomeViewController: UIViewController {
         try? Auth.auth().signOut()
         handleAuthentication()
         authenticationViewModel.clearData()
-        profileViewModel.clearData()
+        profileDataViewModel.clearData()
     }
     
     
@@ -227,11 +234,18 @@ class HomeViewController: UIViewController {
 
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return SizeConstants.numberOfRows
+        return homeViewModel.tweets.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: TweetTableViewCell.identifier, for: indexPath) as? TweetTableViewCell else { return UITableViewCell() }
+        
+        
+        let tweetModel = homeViewModel.tweets[indexPath.row]
+        cell.configureTweet(with: tweetModel.author.displayName,
+                            username: tweetModel.author.username,
+                            tweetText: tweetModel.tweetContent,
+                            avatarPath: tweetModel.author.avatarPath)
         cell.delegate = self
         return cell
     }

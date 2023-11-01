@@ -16,24 +16,22 @@ extension UIView {
     @objc private func didTapToDismiss() {
         self.endEditing(true)
     }
-    
-}
-
-
-extension CGRect {
-    func zoom(by scale: CGFloat) -> CGRect {
-        let newWidth = width * scale
-        let newHeight = height * scale
-        return insetBy(dx: (width - newWidth) / 2, dy: (height - newHeight) / 2)
-    }
-}
-extension CGPoint {
-    func offsetBy(dx: CGFloat, dy: CGFloat) -> CGPoint {
-        return CGPoint(x: x+dx, y: y+dy)
-    }
 }
 
 extension UIColor {
-    
     static let tweeterBlueColor = UIColor(red: 29/255, green: 161/255, blue: 242/255, alpha: 1)
+}
+
+protocol EmailValidatable {
+    func isValidEmail() -> Bool
+}
+
+extension String: EmailValidatable {
+    
+    func isValidEmail() -> Bool {
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+
+        let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return emailPred.evaluate(with: self)
+    }
 }

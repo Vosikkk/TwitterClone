@@ -32,7 +32,7 @@ class MainTabBarViewController: UITabBarController {
         
         
         let homeViewModel = HomeViewModel(userDatabaseManager: userDatabaseManager)
-        let profileViewModel = ProfileDataFormViewModel(userStorageManager: userStorageManager, databaseManager: userDatabaseManager)
+        let profileDataViewModel = ProfileDataFormViewModel(userStorageManager: userStorageManager, databaseManager: userDatabaseManager)
         let authenticationViewModel = AuthenticationViewModel(userAuth: userAuth, userDatabaseManager: userDatabaseManager)
         let profileViewViewModel = ProfileViewViewModel(userDatabaseManager: userDatabaseManager)
         let composeViewModel = TweetComposeViewModel(userDatabaseManager: userDatabaseManager)
@@ -40,7 +40,7 @@ class MainTabBarViewController: UITabBarController {
         let vc1 = UINavigationController(rootViewController: HomeViewController(authenticationViewModel: authenticationViewModel,
                                                                                 homeViewModel: homeViewModel,
                                                                                 commonFactory: commonFactory,
-                                                                                profileViewModel: profileViewModel,
+                                                                                profileDataViewModel: profileDataViewModel,
                                                                                 profileViewViewModel: profileViewViewModel,
                                                                                 composeViewModel: composeViewModel
                                                                                ))

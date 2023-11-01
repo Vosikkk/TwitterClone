@@ -116,10 +116,27 @@ class ProfileViewController: UIViewController {
         }
         .store(in: &subscriptions)
     }
+   
+    private func configureConstraints() {
+        let profileTableViewConstraints = [
+            profileTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            profileTableView.topAnchor.constraint(equalTo: view.topAnchor),
+            profileTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            profileTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ]
+        let statusBarConstraints = [
+            statusBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            statusBar.topAnchor.constraint(equalTo: view.topAnchor),
+            statusBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            statusBar.heightAnchor.constraint(equalToConstant: AppStyle.statusBarHeight + SizeConstants.statusBarOffset)
+        ]
+        NSLayoutConstraint.activate(statusBarConstraints)
+        NSLayoutConstraint.activate(profileTableViewConstraints)
+    }
     
     
     
-    
+        // MARK: - Animation
     
     private func updateParallaxOffset(_ offset: CGFloat) {
         let parallaxOffset = offset / 2 // Змініть значення залежно від бажаного ефекту
@@ -149,24 +166,6 @@ class ProfileViewController: UIViewController {
                 }
             }
         }
-    }
-    
-    
-    private func configureConstraints() {
-        let profileTableViewConstraints = [
-            profileTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            profileTableView.topAnchor.constraint(equalTo: view.topAnchor),
-            profileTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            profileTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        ]
-        let statusBarConstraints = [
-            statusBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            statusBar.topAnchor.constraint(equalTo: view.topAnchor),
-            statusBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            statusBar.heightAnchor.constraint(equalToConstant: AppStyle.statusBarHeight + SizeConstants.statusBarOffset)
-        ]
-        NSLayoutConstraint.activate(statusBarConstraints)
-        NSLayoutConstraint.activate(profileTableViewConstraints)
     }
     
     
