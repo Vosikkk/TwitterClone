@@ -35,9 +35,53 @@ final class LoginViewControllerTests: XCTestCase {
     }
     
     func test_emailTextField_attributesShouldBeSet() {
-        XCTAssertEqual(sut.emailTextField.keyboardType, .emailAddress)
-        XCTAssertEqual(sut.emailTextField.autocorrectionType, .no)
-        XCTAssertEqual(sut.emailTextField.returnKeyType, .next)
+        let textField = sut.emailTextField
+        XCTAssertEqual(textField.keyboardType, .emailAddress, "keyboardType")
+        XCTAssertEqual(textField.autocorrectionType, .no, "autocorrectionType")
+        XCTAssertEqual(textField.returnKeyType, .next, "returnKeyType")
     }
     
+    func test_passwordTextField_atrributesShouldBeSet() {
+        let textField = sut.passwordTextField
+        XCTAssertEqual(textField.textContentType, .password, "textContentType")
+        XCTAssertTrue(textField.isSecureTextEntry, "isSecureTextEntry")
+    }
+    
+    func test_shouldChangeCharacters_emailAdressWithSpaces_shouldPreventChange() {
+        let allowChange = shouldChangeCharacters(in: sut.emailTextField, replacement: "a b")
+        XCTAssertEqual(allowChange, false)
+    }
+    
+    func test_shouldChangeCharacters_emailAdressWithoutSpaces_shouldAllowChange() {
+        let allowChange = shouldChangeCharacters(in: sut.emailTextField, replacement: "acb")
+        XCTAssertEqual(allowChange, true)
+    }
+    
+    func test_shouldChangeCharacters_passwordWithSpaces_shouldAllowChange() {
+        let allowChange = shouldChangeCharacters(in: sut.passwordTextField, replacement: "a b")
+        XCTAssertEqual(allowChange, true)
+    }
+    
+    func test_shouldChangeCharacters_passwordWithoutSpaces_shouldAllowChange() {
+        let allowChange = shouldChangeCharacters(in: sut.passwordTextField, replacement: "abc")
+        XCTAssertEqual(allowChange, true)
+    }
+    
+    func test_shouldReturn_withEmailAdress_shouldMoveInputFocusToPassword() {
+        putInViewHierarchy(sut)
+        shouldReturn(in: sut.emailTextField)
+        XCTAssertTrue(sut.passwordTextField.isFirstResponder)
+    }
+    
+    func test_shouldReturn_withPassword_shouldDismissKeyboard() {
+        putInViewHierarchy(sut)
+        sut.passwordTextField.becomeFirstResponder()
+        
+        XCTAssertEqual(sut.passwordTextField.isFirstResponder, true, "precondition")
+        
+        shouldReturn(in: sut.passwordTextField)
+        
+        XCTAssertFalse(sut.passwordTextField.isFirstResponder)
+        
+    }
 }

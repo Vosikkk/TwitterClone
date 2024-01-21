@@ -33,6 +33,7 @@ class LoginViewController: UIViewController, CommonFormView {
     lazy var passwordTextField: UITextField = {
         let textField = commonFactory.textFieldFactory.createCommonTextField(with: TitleConstants.passwordTextFieldPlaceholder)
         textField.isSecureTextEntry = true
+        textField.textContentType = .password
         return textField
     }()
     
@@ -73,7 +74,8 @@ class LoginViewController: UIViewController, CommonFormView {
         configureConstraints(in: view)
         actionButton.addTarget(self, action: #selector(didTapLogin), for: .touchUpInside)
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapToDismiss)))
-        
+        passwordTextField.delegate = self
+        emailTextField.delegate = self
         bindViews()
     }
     
@@ -138,5 +140,29 @@ class LoginViewController: UIViewController, CommonFormView {
         static let emailTextFiledPlaceholder = "Email"
         static let passwordTextFieldPlaceholder = "Password"
         static let loginLabelTitle = "Login to your account"
+    }
+}
+
+extension LoginViewController: UITextFieldDelegate {
+    
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if textField === emailTextField {
+            return !string.contains(" ")
+        } else {
+            return true
+        }
+    }
+    
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField === emailTextField {
+            passwordTextField.becomeFirstResponder()
+        } else {
+            guard let email = emailTextField.text,
+                  let password = passwordTextField.text else { return false }
+            passwordTextField.resignFirstResponder()
+        }
+        return false 
     }
 }
