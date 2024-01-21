@@ -22,9 +22,11 @@ class LoginViewController: UIViewController, CommonFormView {
                                                             fontSize: FontSizeConstants.actionButtonFontSize)
     }()
     
-    lazy var emailTextFiled: UITextField = {
+    lazy var emailTextField: UITextField = {
         let textField = commonFactory.textFieldFactory.createCommonTextField(with: TitleConstants.emailTextFiledPlaceholder)
         textField.keyboardType = .emailAddress
+        textField.autocorrectionType = .no
+        textField.returnKeyType = .next
         return textField
     }()
     
@@ -92,7 +94,7 @@ class LoginViewController: UIViewController, CommonFormView {
     }
     
     @objc func didChangeEmailField() {
-        authenticationViewModel.email = emailTextFiled.text
+        authenticationViewModel.email = emailTextField.text
         authenticationViewModel.validateAuthenticationForm()
     }
     
@@ -100,7 +102,7 @@ class LoginViewController: UIViewController, CommonFormView {
     // MARK: - Func
     
     func bindViews() {
-        emailTextFiled.addTarget(self, action: #selector(didChangeEmailField), for: .editingChanged)
+        emailTextField.addTarget(self, action: #selector(didChangeEmailField), for: .editingChanged)
         passwordTextField.addTarget(self, action: #selector(didChangePasswordFiled), for: .editingChanged)
         authenticationViewModel.$isAuthenticationValid.sink { [weak self] validation in
             self?.actionButton.isEnabled = validation

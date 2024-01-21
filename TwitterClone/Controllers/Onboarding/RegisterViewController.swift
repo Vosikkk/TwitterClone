@@ -26,7 +26,7 @@ class RegisterViewController: UIViewController, CommonFormView {
          return textField
     }()
     
-    lazy var emailTextFiled: UITextField = {
+    lazy var emailTextField: UITextField = {
         let textField = commonFactory.textFieldFactory.createCommonTextField(with: TitleConstants.emailTextFiledPlaceholder)
         textField.keyboardType = .emailAddress
         return textField
@@ -92,14 +92,14 @@ class RegisterViewController: UIViewController, CommonFormView {
     
     
     @objc private func didChangeEmailField() {
-        authenticationViewModel.email = emailTextFiled.text
+        authenticationViewModel.email = emailTextField.text
         authenticationViewModel.validateAuthenticationForm()
     }
     
     // MARK: - Func
     
     private func bindViews() {
-        emailTextFiled.addTarget(self, action: #selector(didChangeEmailField), for: .editingChanged)
+        emailTextField.addTarget(self, action: #selector(didChangeEmailField), for: .editingChanged)
         passwordTextField.addTarget(self, action: #selector(didChangePasswordFiled), for: .editingChanged)
         authenticationViewModel.$isAuthenticationValid.sink { [weak self] validation in
             self?.actionButton.isEnabled = validation

@@ -11,7 +11,7 @@ import UIKit
 protocol CommonFormView {
     
     var loginLabel: UILabel { get set }
-    var emailTextFiled: UITextField { get set }
+    var emailTextField: UITextField { get set }
     var passwordTextField: UITextField { get set }
     var actionButton: UIButton { get set }
     
@@ -31,16 +31,16 @@ extension CommonFormView {
         ]
         
         let emailTextFieldConstraints = [
-            emailTextFiled.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            emailTextFiled.topAnchor.constraint(equalTo: loginLabel.bottomAnchor, constant: 20),
-            emailTextFiled.widthAnchor.constraint(equalToConstant: view.frame.width - 40),
-            emailTextFiled.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            emailTextFiled.heightAnchor.constraint(equalToConstant: 60)
+            emailTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            emailTextField.topAnchor.constraint(equalTo: loginLabel.bottomAnchor, constant: 20),
+            emailTextField.widthAnchor.constraint(equalToConstant: view.frame.width - 40),
+            emailTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            emailTextField.heightAnchor.constraint(equalToConstant: 60)
         ]
         
         let passwordTextFieldConstraints = [
             passwordTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            passwordTextField.topAnchor.constraint(equalTo: emailTextFiled.bottomAnchor, constant: 15),
+            passwordTextField.topAnchor.constraint(equalTo: emailTextField.bottomAnchor, constant: 15),
             passwordTextField.widthAnchor.constraint(equalToConstant: view.frame.width - 40),
             passwordTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             passwordTextField.heightAnchor.constraint(equalToConstant: 60)
@@ -62,7 +62,7 @@ extension CommonFormView {
    
     func setupUI(in view: UIView) {
         view.addSubview(loginLabel)
-        view.addSubview(emailTextFiled)
+        view.addSubview(emailTextField)
         view.addSubview(passwordTextField)
         view.addSubview(actionButton)
     }

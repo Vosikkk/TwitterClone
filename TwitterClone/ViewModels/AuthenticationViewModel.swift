@@ -9,6 +9,8 @@ import Foundation
 import Firebase
 import Combine
 
+
+
 final class AuthenticationViewModel: ObservableObject {
     
     @Published var email: String?
