@@ -13,14 +13,22 @@ class LoginViewController: UIViewController, CommonFormView {
     
     // MARK: - Properties
     
+    var handleEnabledButton: (Bool) -> Void = { print($0) }
+    
+    
     private var subscriptions: Set<AnyCancellable> = []
     private let authenticationViewModel: AuthenticationViewModel
     private let commonFactory: GeneralFactory
     
     lazy var actionButton: UIButton = {
-        return commonFactory.buttonFactory.createMainFormButton(with: TitleConstants.actionButtonTitle,
-                                                            fontSize: FontSizeConstants.actionButtonFontSize)
+        let button = commonFactory.buttonFactory.createMainFormButton(with: TitleConstants.actionButtonTitle,
+                                                                      fontSize: FontSizeConstants.actionButtonFontSize)
+            return button
+        
     }()
+    
+    
+  
     
     lazy var emailTextField: UITextField = {
         let textField = commonFactory.textFieldFactory.createCommonTextField(with: TitleConstants.emailTextFiledPlaceholder)
@@ -87,6 +95,7 @@ class LoginViewController: UIViewController, CommonFormView {
     }
     
     @objc private func didTapLogin() {
+        print(">>>>> Button Tapped")
         authenticationViewModel.loginUser()
     }
     

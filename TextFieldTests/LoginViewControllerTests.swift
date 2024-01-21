@@ -84,4 +84,26 @@ final class LoginViewControllerTests: XCTestCase {
         XCTAssertFalse(sut.passwordTextField.isFirstResponder)
         
     }
+    
+    func test_ActionButton_withEmptyEmailAndEmptyPassword_shouldButtonBeNotEnabled() {
+        sut.emailTextField.text = ""
+        sut.passwordTextField.text = ""
+        XCTAssertFalse(sut.actionButton.isEnabled)
+    }
+    
+//    func test_ActionButton_withCorrectEmailAndPasswordWith8characters_shouldButtonBeEnabled() {
+//        let handleButtonEnabled = expectation(description: "button enabled")
+//        sut.emailTextField.text = "test@gmail.com"
+//        sut.passwordTextField.text = "testtestr"
+//        
+//        sut.handleEnabledButton = { res in
+//            print(res)
+//            handleButtonEnabled.fulfill()
+//        }
+//        
+//        waitForExpectations(timeout: 1)
+//        
+//        XCTAssertEqual(sut.actionButton.isEnabled, true)
+//    }
+    
 }

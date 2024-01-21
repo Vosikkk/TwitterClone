@@ -109,3 +109,7 @@ func putInViewHierarchy(_ vc: UIViewController) {
     let window = UIWindow()
     window.addSubview(vc.view)
 }
+
+func tap(_ button: UIButton) {
+    button.sendActions(for: .touchUpInside)
+}
